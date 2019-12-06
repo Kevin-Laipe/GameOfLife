@@ -23,6 +23,11 @@ namespace GameOfLife
         public MainWindow()
         {
             InitializeComponent();
+
+            Models.Grid model = new Models.Grid(10, 10);
+            Views.Grid view = new Views.Grid(model);
+            view.Background = Brushes.Yellow;
+            GridPanel.Children.Add(view);
         }
     }
 }

@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:GameOfLife"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <StackPanel VerticalAlignment="Bottom">
+    <StackPanel x:Name="mainStackPanel" VerticalAlignment="Bottom" >
+        <StackPanel x:Name="GridPanel"></StackPanel>
         <GroupBox Header="Paramêtres">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button x:Name="startButton">Start</Button>
