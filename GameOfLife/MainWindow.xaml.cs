@@ -20,14 +20,27 @@ namespace GameOfLife
     /// </summary>
     public partial class MainWindow : Window
     {
+        Views.Grid view;
         public MainWindow()
         {
             InitializeComponent();
 
             Models.Grid model = new Models.Grid(10, 10);
-            Views.Grid view = new Views.Grid(model);
-            view.Background = Brushes.Yellow;
+            view = new Views.Grid(model);
             GridPanel.Children.Add(view);
+        }
+
+        private void GridPanel_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            double size = GridPanel.ActualHeight;
+            if(size > GridPanel.ActualWidth)
+            {
+                size = GridPanel.ActualWidth;
+            }
+
+            view.Width = size;
+            view.Height = size;
+
         }
     }
 }

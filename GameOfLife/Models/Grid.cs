@@ -8,9 +8,15 @@ namespace GameOfLife.Models
 {
     class Grid
     {
+        //Attributs
         private Cell[,] cells;
         private int height, width;
 
+        /// <summary>
+        /// Constructeur de la classe Grid (Modèle)
+        /// </summary>
+        /// <param name="width">Nombre de colonne</param>
+        /// <param name="height">Nombre de ligne</param>
         public Grid(int width, int height)
         {
             this.width = width;
@@ -26,6 +32,9 @@ namespace GameOfLife.Models
             }
         }
 
+        /// <summary>
+        /// Créer une grille avec des cellules d'état aléatoire
+        /// </summary>
         public void Randomize()
         {
             Random random = new Random();
@@ -35,17 +44,29 @@ namespace GameOfLife.Models
             }
         }
 
+        /// <summary>
+        /// Cellule de la grille
+        /// </summary>
+        /// <param name="x">Collone de la cellule</param>
+        /// <param name="y">Ligne de la cellule</param>
+        /// <returns></returns>
         public Cell this[int x, int y]
         {
             get { return cells[x, y]; }
             set { cells[x, y] = value; }
         }
 
+        /// <summary>
+        /// Nombre de collone
+        /// </summary>
         public int Width
         {
             get { return width; }
         }
 
+        /// <summary>
+        /// Nombre de ligne
+        /// </summary>
         public int Height
         {
             get { return height; }

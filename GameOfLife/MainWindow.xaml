@@ -7,7 +7,16 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <StackPanel x:Name="mainStackPanel" VerticalAlignment="Bottom" >
-        <StackPanel x:Name="GridPanel"></StackPanel>
+        <StackPanel x:Name="GridPanel" SizeChanged="GridPanel_SizeChanged" Height="365" Margin="0,0,-0.4,0" RenderTransformOrigin="0.5,0.5">
+            <StackPanel.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </StackPanel.RenderTransform>
+        </StackPanel>
         <GroupBox Header="Paramêtres">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button x:Name="startButton">Start</Button>
