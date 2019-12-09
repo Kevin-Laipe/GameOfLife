@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GameOfLifeAlgorithm.cs" />
     <Compile Include="Views\Cell.cs" />
     <Compile Include="Views\Grid.cs" />
     <Page Include="MainWindow.xaml">

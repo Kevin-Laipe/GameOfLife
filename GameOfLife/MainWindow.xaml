@@ -19,9 +19,10 @@
         </StackPanel>
         <GroupBox Header="Paramêtres">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button x:Name="startButton">Start</Button>
-                <Button x:Name="pauseButton">Pause</Button>
-                <Button x:Name="restButton">Reset</Button>
+                <Button x:Name="startButton" Click="StartButton_Clicked">Start</Button>
+                <Button x:Name="stopButton" Click="StopButton_Clicked">Stop</Button>
+                <Button x:Name="resetButton" Click="ResetButton_Clicked">Reset</Button>
+                <Button x:Name="randomizeButton" Click="RandomizeButton_Clicked">Randomize</Button>
             </StackPanel>
         </GroupBox>
         

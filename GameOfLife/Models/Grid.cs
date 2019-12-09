@@ -40,7 +40,18 @@ namespace GameOfLife.Models
             Random random = new Random();
             foreach (Cell cell in cells)
             {
-                cell.State = (Cell.CellState)random.Next(0, 1);
+                cell.State = (Cell.CellState)random.Next(0, 2);
+            }
+        }
+
+        /// <summary>
+        /// Met toutes les valeurs des cellule à Mort
+        /// </summary>
+        public void Clear()
+        {
+            foreach(Cell cell in cells)
+            {
+                cell.State = Cell.CellState.Dead;
             }
         }
 

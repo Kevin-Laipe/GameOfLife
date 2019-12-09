@@ -54,7 +54,7 @@ namespace GameOfLife.Views
         /// <summary>
         /// Change la couleur en fonction de l'état actuel de la cellule
         /// </summary>
-        private void UpdateColor()
+        public void UpdateColor()
         {
             switch(model.State)
             {

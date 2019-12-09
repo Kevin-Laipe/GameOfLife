@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace GameOfLife
 {
@@ -20,14 +22,41 @@ namespace GameOfLife
     /// </summary>
     public partial class MainWindow : Window
     {
+        DispatcherTimer timer;
         Views.Grid view;
         public MainWindow()
         {
             InitializeComponent();
 
+            timer = new DispatcherTimer();
+            timer.Tick += new EventHandler(Timer_Tick);
+            timer.Interval = TimeSpan.FromSeconds(1);
+
             Models.Grid model = new Models.Grid(10, 10);
             view = new Views.Grid(model);
             GridPanel.Children.Add(view);
+        }
+
+        private void StartButton_Clicked(object sender, RoutedEventArgs args)
+        {
+            timer.Start();
+        }
+
+        private void StopButton_Clicked(object sender, RoutedEventArgs args)
+        {
+            timer.Stop();
+        }
+
+        private void ResetButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            view.Model.Clear();
+            view.Refresh();
+        }
+
+        private void RandomizeButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            view.Model.Randomize();
+            view.Refresh();
         }
 
         private void GridPanel_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -41,6 +70,12 @@ namespace GameOfLife
             view.Width = size;
             view.Height = size;
 
+        }
+
+        private void Timer_Tick(Object sender, EventArgs args)
+        {
+            GameOfLifeAlgorithm.Update(view.Model);
+            view.Refresh();
         }
     }
 }

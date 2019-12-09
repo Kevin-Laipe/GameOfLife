@@ -52,6 +52,17 @@ namespace GameOfLife.Views
         }
 
         /// <summary>
+        /// Met à jour les couleurs des cellules
+        /// </summary>
+        public void Refresh()
+        {
+            foreach(Cell cell in cells)
+            {
+                cell.UpdateColor();
+            }
+        }
+
+        /// <summary>
         /// Ajoute tous le événement de cet objet
         /// </summary>
         private void RegisterEvents()
@@ -84,7 +95,7 @@ namespace GameOfLife.Views
         }
 
         /// <summary>
-        /// Cellule de la grulle
+        /// Cellule de la grille
         /// </summary>
         /// <param name="x">Colonne de la cellule</param>
         /// <param name="y">Ligne de la cellule</param>
@@ -92,6 +103,14 @@ namespace GameOfLife.Views
         private Cell this[int x, int y]
         {
             get { return cells[x, y]; }
+        }
+
+        /// <summary>
+        /// Modèle représentant la grille
+        /// </summary>
+        public Models.Grid Model
+        {
+            get { return model; }
         }
     }
 }
