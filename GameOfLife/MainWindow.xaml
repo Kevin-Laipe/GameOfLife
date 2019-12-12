@@ -17,8 +17,9 @@
                 </TransformGroup>
             </StackPanel.RenderTransform>
         </StackPanel>
-        <GroupBox Header="Paramêtres">
+        <GroupBox Header="Paramètres">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Slider x:Name="speedSlider" ValueChanged="SpeedSlider_ValueChanged" Width="100" Minimum="1" Maximum="25"/>
                 <Button x:Name="startButton" Click="StartButton_Clicked">Start</Button>
                 <Button x:Name="stopButton" Click="StopButton_Clicked">Stop</Button>
                 <Button x:Name="resetButton" Click="ResetButton_Clicked">Reset</Button>

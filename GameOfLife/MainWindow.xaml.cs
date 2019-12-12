@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -62,14 +63,25 @@ namespace GameOfLife
         private void GridPanel_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             double size = GridPanel.ActualHeight;
-            if(size > GridPanel.ActualWidth)
+            if (size > GridPanel.ActualWidth)
             {
                 size = GridPanel.ActualWidth;
             }
 
             view.Width = size;
             view.Height = size;
+        }
 
+        private void SpeedSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            try
+            {
+                timer.Interval = TimeSpan.FromSeconds(1 / e.NewValue);
+            }
+            catch(NullReferenceException ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
         }
 
         private void Timer_Tick(Object sender, EventArgs args)
