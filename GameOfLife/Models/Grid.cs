@@ -73,6 +73,7 @@ namespace GameOfLife.Models
         public int Width
         {
             get { return width; }
+            set { width = value; }
         }
 
         /// <summary>
@@ -81,6 +82,7 @@ namespace GameOfLife.Models
         public int Height
         {
             get { return height; }
+            set { height = value; }
         }
 
     }
