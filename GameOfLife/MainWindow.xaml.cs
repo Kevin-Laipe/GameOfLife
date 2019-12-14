@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -33,7 +34,7 @@ namespace GameOfLife
             timer.Tick += new EventHandler(Timer_Tick);
             timer.Interval = TimeSpan.FromSeconds(1);
 
-            Models.Grid model = new Models.Grid(10, 10);
+            Models.Grid model = new Models.Grid(Convert.ToInt32(xTextBox.Text), Convert.ToInt32(yTextBox.Text));
             view = new Views.Grid(model);
             GridPanel.Children.Add(view);
         }
@@ -50,8 +51,28 @@ namespace GameOfLife
 
         private void ResetButton_Clicked(object sender, RoutedEventArgs e)
         {
-            view.Model.Clear();
-            view.Refresh();
+            if (xTextBox.Text != null && yTextBox.Text != null) // Si les text boxes ne sont pas vides, on refait une nouvelle grille
+            {
+                GridPanel.Children.Remove(view);
+                Models.Grid model = new Models.Grid(Convert.ToInt32(xTextBox.Text), Convert.ToInt32(yTextBox.Text));
+                view = new Views.Grid(model);
+
+                double size = GridPanel.ActualHeight;
+                if (size > GridPanel.ActualWidth)
+                {
+                    size = GridPanel.ActualWidth;
+                }
+
+                view.Width = size;
+                view.Height = size;
+
+                GridPanel.Children.Add(view);
+            }
+            else
+            {
+                view.Model.Clear();
+                view.Refresh();
+            }
         }
 
         private void RandomizeButton_Clicked(object sender, RoutedEventArgs e)
@@ -78,10 +99,66 @@ namespace GameOfLife
             {
                 timer.Interval = TimeSpan.FromSeconds(1 / e.NewValue);
             }
-            catch(NullReferenceException ex)
+            catch (NullReferenceException ex)
             {
                 Debug.WriteLine(ex.ToString());
             }
+        }
+
+        /// <summary>
+        /// On ne prend que des chiffres dans les text boxes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.NumPad0:
+                case Key.NumPad1:
+                case Key.NumPad2:
+                case Key.NumPad3:
+                case Key.NumPad4:
+                case Key.NumPad5:
+                case Key.NumPad6:
+                case Key.NumPad7:
+                case Key.NumPad8:
+                case Key.NumPad9:
+                case Key.D0:
+                case Key.D1:
+                case Key.D2:
+                case Key.D3:
+                case Key.D4:
+                case Key.D5:
+                case Key.D6:
+                case Key.D7:
+                case Key.D8:
+                case Key.D9:
+                case Key.Back:
+                    e.Handled = false;
+                    break;
+                default:
+                    e.Handled = true;
+                    break;
+            }
+
+        }
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (IsValidInt(e.Text))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private bool IsValidInt(string s)
+        {
+            Regex r = new Regex(@"\d");
+            return r.IsMatch(s);
         }
 
         private void Timer_Tick(Object sender, EventArgs args)

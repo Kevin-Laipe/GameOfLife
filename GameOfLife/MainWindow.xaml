@@ -24,8 +24,10 @@
                 <Button x:Name="stopButton" Click="StopButton_Clicked">Stop</Button>
                 <Button x:Name="resetButton" Click="ResetButton_Clicked">Reset</Button>
                 <Button x:Name="randomizeButton" Click="RandomizeButton_Clicked">Randomize</Button>
+                <TextBox x:Name="xTextBox" Text="10" Width="25" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
+                <TextBox x:Name="yTextBox" Text="10" Width="25" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
             </StackPanel>
         </GroupBox>
-        
+
     </StackPanel>
-</Window>
+</Window>    
