@@ -22,14 +22,7 @@ namespace GameOfLife.Models
             this.width = width;
             this.height = height;
 
-            cells = new Cell[width, height];
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    cells[x, y] = new Cell();
-                }
-            }
+            this.InitCells(width, height);
         }
 
         /// <summary>
@@ -52,6 +45,23 @@ namespace GameOfLife.Models
             foreach(Cell cell in cells)
             {
                 cell.State = Cell.CellState.Dead;
+            }
+        }
+
+        /// <summary>
+        /// Crée le tableau de cellules
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        private void InitCells(int width, int height)
+        {
+            this.cells = new Cell[width, height];
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    cells[x, y] = new Cell();
+                }
             }
         }
 

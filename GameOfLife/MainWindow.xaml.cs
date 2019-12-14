@@ -56,6 +56,16 @@ namespace GameOfLife
                 GridPanel.Children.Remove(view);
                 Models.Grid model = new Models.Grid(Convert.ToInt32(xTextBox.Text), Convert.ToInt32(yTextBox.Text));
                 view = new Views.Grid(model);
+
+                double size = GridPanel.ActualHeight;
+                if (size > GridPanel.ActualWidth)
+                {
+                    size = GridPanel.ActualWidth;
+                }
+
+                view.Width = size;
+                view.Height = size;
+
                 GridPanel.Children.Add(view);
             }
             else
