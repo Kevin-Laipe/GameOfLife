@@ -51,7 +51,7 @@ namespace GameOfLife
 
         private void ResetButton_Clicked(object sender, RoutedEventArgs e)
         {
-            if (xTextBox.Text != null && yTextBox.Text != null) // Si les text boxes ne sont pas vides, on refait une nouvelle grille
+            if (xTextBox.Text != "" && yTextBox.Text != "") // Si les text boxes ne sont pas vides, on refait une nouvelle grille
             {
                 GridPanel.Children.Remove(view);
                 Models.Grid model = new Models.Grid(Convert.ToInt32(xTextBox.Text), Convert.ToInt32(yTextBox.Text));
