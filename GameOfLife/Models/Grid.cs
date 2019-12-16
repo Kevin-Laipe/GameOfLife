@@ -11,6 +11,7 @@ namespace GameOfLife.Models
         //Attributs
         private Cell[,] cells;
         private int height, width;
+        private Statistics statistics;
 
         /// <summary>
         /// Constructeur de la classe Grid (Modèle)
@@ -21,6 +22,7 @@ namespace GameOfLife.Models
         {
             this.width = width;
             this.height = height;
+            statistics = new Statistics();
 
             cells = new Cell[width, height];
             for (int y = 0; y < height; y++)
@@ -37,11 +39,19 @@ namespace GameOfLife.Models
         /// </summary>
         public void Randomize()
         {
+            statistics.Reset();
+
             Random random = new Random();
             foreach (Cell cell in cells)
             {
                 cell.State = (Cell.CellState)random.Next(0, 2);
+
+                if (cell.State == Cell.CellState.Alive)
+                    statistics.population += 1;
             }
+
+            statistics.smallestPopulation = statistics.population;
+            statistics.greatestPopulation = statistics.population;
         }
 
         /// <summary>
@@ -49,6 +59,8 @@ namespace GameOfLife.Models
         /// </summary>
         public void Clear()
         {
+            statistics.Reset();
+
             foreach(Cell cell in cells)
             {
                 cell.State = Cell.CellState.Dead;
@@ -81,6 +93,14 @@ namespace GameOfLife.Models
         public int Height
         {
             get { return height; }
+        }
+
+        /// <summary>
+        /// Statistiques liées à la grille
+        /// </summary>
+        public Statistics Statistics
+        {
+            get { return statistics; }
         }
 
     }

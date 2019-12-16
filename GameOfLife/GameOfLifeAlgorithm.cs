@@ -9,19 +9,34 @@ namespace GameOfLife
 
         public static void Update(Models.Grid grid)
         {
-            Models.Cell.CellState[,] nextValues = PrepareNextValues(grid);
-            ApplyNextValues(grid, nextValues);
+            PrepareNextValues(grid);
+            ApplyNextValues(grid);
+
+            grid.Statistics.iterations += 1;
         }
 
-        private static void ApplyNextValues(Grid grid, Cell.CellState[,] values)
+        private static void ApplyNextValues(Grid grid)
         {
+            grid.Statistics.population = 0;
+
             for(int y = 0; y < grid.Height; y++)
             {
                 for(int x = 0; x < grid.Width; x++)
                 {
-                    grid[x, y].State = values[x, y];
+                    grid[x, y].Apply();
+
+                    if (grid.Statistics.oldestCell < grid[x, y].Age)
+                        grid.Statistics.oldestCell = grid[x, y].Age;
+                    if (grid[x, y].State == Cell.CellState.Alive)
+                        grid.Statistics.population += 1;
+
                 }
             }
+
+            if (grid.Statistics.population > grid.Statistics.greatestPopulation)
+                grid.Statistics.greatestPopulation = grid.Statistics.population;
+            if (grid.Statistics.smallestPopulation == 0 || grid.Statistics.population < grid.Statistics.smallestPopulation)
+                grid.Statistics.smallestPopulation = grid.Statistics.population;
         }
 
         private static Cell.CellState[,] PrepareNextValues(Grid grid)
@@ -32,7 +47,7 @@ namespace GameOfLife
             {
                 for(int x = 0; x < grid.Width; x++)
                 {
-                    nextValues[x, y] = GetCellNextValue(grid, x, y);
+                    grid[x, y].Prepare(GetCellNextValue(grid, x, y));
                 }
             }
 

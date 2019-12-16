@@ -15,6 +15,8 @@ namespace GameOfLife.Models
 
         //Attributs
         private CellState state;
+        private CellState nextState;
+        private int age;
         
         /// <summary>
         /// Constructeur de la classe Cell (Modèle)
@@ -22,6 +24,23 @@ namespace GameOfLife.Models
         public Cell()
         {
             state = CellState.Dead;
+            nextState = CellState.Dead;
+            age = 0;
+        }
+
+        public void Prepare(CellState nextState)
+        {
+            this.nextState = nextState;
+        }
+
+        public void Apply()
+        {
+            state = nextState;
+
+            if (state == CellState.Dead)
+                age = 0;
+            else
+                age++;
         }
 
         /// <summary>
@@ -31,6 +50,11 @@ namespace GameOfLife.Models
         {
             get { return state; }
             set { state = value; }
+        }
+
+        public int Age
+        {
+            get { return age; }
         }
     }
 }

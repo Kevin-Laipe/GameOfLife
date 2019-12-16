@@ -42,7 +42,7 @@ namespace GameOfLife.Views
                 for(int x = 0; x < model.Width; x++)
                 {
                     //Création des cellules et ajout à la grille
-                    Cell newCell = new Cell(model[x, y]);
+                    Cell newCell = new Cell(model[x, y], model.Statistics);
                     cells[x, y] = newCell;
                     this.Children.Add(newCell);
                     Grid.SetRow(newCell, x);

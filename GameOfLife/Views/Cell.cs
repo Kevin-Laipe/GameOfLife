@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameOfLife.Models;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -11,14 +12,16 @@ namespace GameOfLife.Views
     {
         //Attributs
         private Models.Cell model;
+        private Statistics statistics;
         
         /// <summary>
         /// Constructeur de la classe Cell (View)
         /// </summary>
         /// <param name="model">Modèle de la cellule</param>
-        public Cell(Models.Cell model) : base()
+        public Cell(Models.Cell model, Statistics statistics) : base()
         {
             this.model = model;
+            this.statistics = statistics;
 
             Init();
             RegisterEvents();
@@ -37,17 +40,18 @@ namespace GameOfLife.Views
         /// </summary>
         private void RegisterEvents()
         {
-            this.Click += new RoutedEventHandler(OnClick);
+            this.Click += new RoutedEventHandler(OnMouseClick);
         }
 
         /// <summary>
-        /// Fonction appelée lorsque l'objet est clické par l'utilisateur
+        /// Fonction appelée lorsque la souris clique sur cet élément
         /// </summary>
         /// <param name="sender">Objet qui appelle la fonction (Dans ce cas toujours une cellule)</param>
         /// <param name="args">Arguments concernant l'évévenemnt</param>
-        private void OnClick(Object sender, RoutedEventArgs args)
+        private void OnMouseClick(Object sender, RoutedEventArgs args)
         {
             model.State = (Models.Cell.CellState)((int)(model.State + 1) % 2);
+
             UpdateColor();
         }
 

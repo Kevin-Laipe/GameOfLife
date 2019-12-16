@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameOfLife.Models;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -36,6 +37,8 @@ namespace GameOfLife
             Models.Grid model = new Models.Grid(10, 10);
             view = new Views.Grid(model);
             GridPanel.Children.Add(view);
+
+            DisplayStatistics();
         }
 
         private void StartButton_Clicked(object sender, RoutedEventArgs args)
@@ -52,21 +55,21 @@ namespace GameOfLife
         {
             view.Model.Clear();
             view.Refresh();
+            DisplayStatistics();
         }
 
         private void RandomizeButton_Clicked(object sender, RoutedEventArgs e)
         {
             view.Model.Randomize();
             view.Refresh();
+            DisplayStatistics();
         }
 
         private void GridPanel_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             double size = GridPanel.ActualHeight;
             if (size > GridPanel.ActualWidth)
-            {
                 size = GridPanel.ActualWidth;
-            }
 
             view.Width = size;
             view.Height = size;
@@ -74,13 +77,11 @@ namespace GameOfLife
 
         private void SpeedSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            try
+            if(timer != null)
             {
-                timer.Interval = TimeSpan.FromSeconds(1 / e.NewValue);
-            }
-            catch(NullReferenceException ex)
-            {
-                Debug.WriteLine(ex.ToString());
+                double newSpeed = e.NewValue;
+                timer.Interval = TimeSpan.FromSeconds(newSpeed);
+                speedLabel.Content = Math.Round(newSpeed, 2) + " secondes";
             }
         }
 
@@ -88,6 +89,19 @@ namespace GameOfLife
         {
             GameOfLifeAlgorithm.Update(view.Model);
             view.Refresh();
+            DisplayStatistics();
+
+        }
+
+        private void DisplayStatistics()
+        {
+            Statistics statistics = view.Model.Statistics;
+
+            lblIterations.Content = "Itérations : " + statistics.iterations;
+            lblPopulation.Content = "Population actuelle : " + statistics.population;
+            lblMaxPopulation.Content = "Population max : " + statistics.greatestPopulation;
+            lblMinPopulation.Content = "Population min : " + statistics.smallestPopulation;
+            lblOldest.Content = "Age maximal : " + statistics.oldestCell;
         }
     }
 }
