@@ -45,8 +45,8 @@ namespace GameOfLife.Views
                     Cell newCell = new Cell(model[x, y], model.Statistics);
                     cells[x, y] = newCell;
                     this.Children.Add(newCell);
-                    Grid.SetRow(newCell, x);
-                    Grid.SetColumn(newCell, y);
+                    Grid.SetColumn(newCell, x);
+                    Grid.SetRow(newCell, y);
                 }
             }
         }
