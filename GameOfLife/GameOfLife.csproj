@@ -59,6 +59,7 @@
     <Compile Include="Models\Statistics.cs" />
     <Compile Include="Views\Cell.cs" />
     <Compile Include="Views\Grid.cs" />
+    <Compile Include="Views\NumberPicker.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

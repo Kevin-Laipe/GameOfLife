@@ -4,11 +4,39 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GameOfLife"
+        xmlns:views="clr-namespace:GameOfLife.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <StackPanel Orientation="Horizontal" x:Name="mainStackPanel">
-        <GroupBox>
+        Title="Game Of Life" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="170" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0">
             <StackPanel HorizontalAlignment="Center">
+                <GroupBox Header="Taille" Width="159">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0">Largeur :</Label>
+                        <views:NumberPicker x:Name="npWidth" Grid.Row="0" Grid.Column="1" Value="10" Minimum="1" Maximum="50"/>
+                        <Label Grid.Row="1" Grid.Column="0">Hauteur:</Label>
+                        <views:NumberPicker x:Name="npHeight" Grid.Row="1" Grid.Column="1" Value="10" Minimum="1" Maximum="50"/>
+                        <Button x:Name="SizeButton" Grid.Row="2" Grid.ColumnSpan="2" Click="SizeButton_Click">Valider</Button>
+                    </Grid>
+                </GroupBox>
                 <GroupBox Header="Vitesse">
                     <StackPanel>
                         <Slider x:Name="speedSlider" ValueChanged="SpeedSlider_ValueChanged" Value="1" Width="100" Minimum="0.01" Maximum="10"/>
@@ -23,16 +51,13 @@
                         <Label x:Name="lblMaxPopulation"/>
                         <Label x:Name="lblOldest"/>
                     </StackPanel>
-
                 </GroupBox>
                 <Button x:Name="startButton" Click="StartButton_Clicked">Start</Button>
                 <Button x:Name="stopButton" Click="StopButton_Clicked">Stop</Button>
                 <Button x:Name="resetButton" Click="ResetButton_Clicked">Reset</Button>
-                <Button x:Name="randomizeButton" Click="RandomizeButton_Clicked">Randomize</Button>
-                <TextBox x:Name="xTextBox" Text="10" Width="25" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
-                <TextBox x:Name="yTextBox" Text="10" Width="25" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
+                <Button x:Name="randomizeButton" Click="RandomizeButton_Click">Randomize</Button>
             </StackPanel>
-        </GroupBox>
-        <StackPanel x:Name="GridPanel" SizeChanged="GridPanel_SizeChanged" Margin="10" Width="646" />
-    </StackPanel>
+        </StackPanel>
+        <StackPanel x:Name="GridPanel" SizeChanged="GridPanel_SizeChanged" Grid.Row="0" Grid.Column="1" Margin="10,10,10,10" />
+    </Grid>
 </Window>    

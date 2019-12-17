@@ -18,7 +18,6 @@ namespace GameOfLife.Views
             this.model = model;
             cells = new Cell[model.Width, model.Height];
 
-            RegisterEvents();
             Init();
         }
 
@@ -63,35 +62,41 @@ namespace GameOfLife.Views
         }
 
         /// <summary>
-        /// Ajoute tous le événement de cet objet
+        /// Modifie le nombre de lignes et de colonnes de la grille
         /// </summary>
-        private void RegisterEvents()
+        /// <param name="rows">Nombre de lignes</param>
+        /// <param name="columns">Nombre de colonnes</param>
+        /// <returns>Grille redimensionnée</returns>
+        public Grid Resize(int rows, int columns)
         {
-            //this.SizeChanged += new SizeChangedEventHandler(OnSizeChanged);
+            Grid newGrid = new Grid(new Models.Grid(rows, columns));
+
+            for(int y = 0; y < model.Height; y++)
+            {
+                for(int x = 0; x < model.Width; x++)
+                {
+                    if(x < newGrid.Model.Width && y < newGrid.Model.Height)
+                        newGrid.model[x, y].State = model[x, y].State;
+                }
+            }
+
+            return newGrid;
         }
 
         /// <summary>
-        /// Méthode appelée lorsque la dimension de la grille est modifiée
+        /// Redimensionne (pixel) la taille de la grille.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void OnSizeChanged(Object sender, SizeChangedEventArgs args)
+        /// <param name="width">Lageur de la grille (pixel)</param>
+        /// <param name="height">Hauteur de la grille (pixel)</param>
+        public void ChangeSize(double width, double height)
         {
-            if(args.NewSize.Width >= 1 && args.NewSize.Height >= 1)
-            {
-                double cellWidth = (args.NewSize.Width - 1) / model.Width;
-                double cellHeight = (args.NewSize.Height - 1) / model.Height;
-                double cellSize = (cellWidth < cellHeight) ? cellWidth : cellHeight;
+            double horizontal_size = width / model.Width;
+            double vertical_size = height / model.Height;
 
-                this.Width = cellSize * model.Width;
-                this.Height = cellSize * model.Height;
+            double size = (horizontal_size < vertical_size) ? horizontal_size : vertical_size;
 
-                foreach (Cell cell in cells)
-                {
-                    cell.Width = cellSize;
-                    cell.Height = cellSize;
-                }
-            }
+            this.Width = size * model.Width;
+            this.Height = size * model.Height;
         }
 
         /// <summary>

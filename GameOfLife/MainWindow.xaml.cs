@@ -27,6 +27,7 @@ namespace GameOfLife
     {
         DispatcherTimer timer;
         Views.Grid view;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -35,9 +36,10 @@ namespace GameOfLife
             timer.Tick += new EventHandler(Timer_Tick);
             timer.Interval = TimeSpan.FromSeconds(1);
 
-            Models.Grid model = new Models.Grid(Convert.ToInt32(xTextBox.Text), Convert.ToInt32(yTextBox.Text));
-            view = new Views.Grid(model);
-            GridPanel.Children.Add(view);
+            npWidth.SetValue(10);
+            npHeight.SetValue(10);
+
+            SetGrid(new Views.Grid(new Models.Grid(10, 10)));
 
             DisplayStatistics();
         }
@@ -59,7 +61,7 @@ namespace GameOfLife
             DisplayStatistics();
         }
 
-        private void RandomizeButton_Clicked(object sender, RoutedEventArgs e)
+        private void RandomizeButton_Click(object sender, RoutedEventArgs e)
         {
             view.Model.Randomize();
             view.Refresh();
@@ -68,12 +70,7 @@ namespace GameOfLife
 
         private void GridPanel_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            double size = GridPanel.ActualHeight;
-            if (size > GridPanel.ActualWidth)
-                size = GridPanel.ActualWidth;
-
-            view.Width = size;
-            view.Height = size;
+            view.ChangeSize(e.NewSize.Width, e.NewSize.Height);
         }
 
         private void SpeedSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -86,60 +83,18 @@ namespace GameOfLife
             }
         }
 
-        /// <summary>
-        /// On ne prend que des chiffres dans les text boxes
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void SizeButton_Click(object sender, RoutedEventArgs args)
         {
-            switch (e.Key)
-            {
-                case Key.NumPad0:
-                case Key.NumPad1:
-                case Key.NumPad2:
-                case Key.NumPad3:
-                case Key.NumPad4:
-                case Key.NumPad5:
-                case Key.NumPad6:
-                case Key.NumPad7:
-                case Key.NumPad8:
-                case Key.NumPad9:
-                case Key.D0:
-                case Key.D1:
-                case Key.D2:
-                case Key.D3:
-                case Key.D4:
-                case Key.D5:
-                case Key.D6:
-                case Key.D7:
-                case Key.D8:
-                case Key.D9:
-                case Key.Back:
-                    e.Handled = false;
-                    break;
-                default:
-                    e.Handled = true;
-                    break;
-            }
+            Models.Grid model = view.Model;
+            int width = Convert.ToInt32(npWidth.Value);
+            int height = Convert.ToInt32(npHeight.Value);
 
-        }
-        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            if (IsValidInt(e.Text))
+            if (model.Width != width || model.Height != height)
             {
-                e.Handled = false;
+                SetGrid(view.Resize(width, height));
+                view.ChangeSize(GridPanel.ActualWidth, GridPanel.ActualHeight);
             }
-            else
-            {
-                e.Handled = true;
-            }
-        }
-
-        private bool IsValidInt(string s)
-        {
-            Regex r = new Regex(@"\d");
-            return r.IsMatch(s);
+            DisplayStatistics();
         }
 
         private void Timer_Tick(Object sender, EventArgs args)
@@ -147,7 +102,13 @@ namespace GameOfLife
             GameOfLifeAlgorithm.Update(view.Model);
             view.Refresh();
             DisplayStatistics();
+        }
 
+        private void SetGrid(Views.Grid newGrid)
+        {
+            view = newGrid;
+            GridPanel.Children.Clear();   
+            GridPanel.Children.Add(newGrid);
         }
 
         private void DisplayStatistics()
