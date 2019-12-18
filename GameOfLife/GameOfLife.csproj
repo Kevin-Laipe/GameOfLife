@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Pattern.cs" />
     <Compile Include="GameOfLifeAlgorithm.cs" />
     <Compile Include="Models\Statistics.cs" />
     <Compile Include="Views\Cell.cs" />
@@ -101,6 +102,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="images\glider.PNG" />
+    <Resource Include="images\lwSpaceship.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\cellule.PNG" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

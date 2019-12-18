@@ -1,5 +1,6 @@
 ﻿using GameOfLife.Models;
 using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -50,6 +51,10 @@ namespace GameOfLife.Views
         /// <param name="args">Arguments concernant l'évévenemnt</param>
         private void OnMouseClick(Object sender, RoutedEventArgs args)
         {
+            var patternVM = (PatternViewModel)DataContext;
+
+            Debug.WriteLine(patternVM.SelectedPattern.Name);
+
             model.State = (Models.Cell.CellState)((int)(model.State + 1) % 2);
 
             UpdateColor();
