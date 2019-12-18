@@ -58,6 +58,6 @@
                 <Button x:Name="randomizeButton" Click="RandomizeButton_Click">Randomize</Button>
             </StackPanel>
         </StackPanel>
-        <StackPanel x:Name="GridPanel" SizeChanged="GridPanel_SizeChanged" Grid.Row="0" Grid.Column="1" Margin="10,10,10,10" />
+        <DockPanel x:Name="GridPanel" SizeChanged="GridPanel_SizeChanged" Grid.Row="0" Grid.Column="1" Margin="10,10,10,10" />
     </Grid>
 </Window>    

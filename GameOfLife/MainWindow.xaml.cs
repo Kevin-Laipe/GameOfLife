@@ -93,6 +93,7 @@ namespace GameOfLife
             {
                 SetGrid(view.Resize(width, height));
                 view.ChangeSize(GridPanel.ActualWidth, GridPanel.ActualHeight);
+                view.Refresh();
             }
             DisplayStatistics();
         }

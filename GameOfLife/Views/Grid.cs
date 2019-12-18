@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Controls;
 using System.Windows;
+using System.Windows.Media;
 
 namespace GameOfLife.Views
 {
@@ -19,6 +20,8 @@ namespace GameOfLife.Views
             cells = new Cell[model.Width, model.Height];
 
             Init();
+            this.VerticalAlignment = VerticalAlignment.Center;
+            this.HorizontalAlignment = HorizontalAlignment.Center;
         }
 
         /// <summary>
