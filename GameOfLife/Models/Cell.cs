@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameOfLife.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +9,6 @@ namespace GameOfLife.Models
 {
     class Cell
     {
-        /// <summary>
-        /// Etats possibles d'une cellule
-        /// </summary>
-        public enum CellState { Alive, Dead}
-
         //Attributs
         private CellState state;
         private CellState nextState;

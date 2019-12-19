@@ -1,21 +1,6 @@
 ﻿using GameOfLife.Models;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace GameOfLife
@@ -25,6 +10,7 @@ namespace GameOfLife
     /// </summary>
     public partial class MainWindow : Window
     {
+        //Attributs
         DispatcherTimer timer;
         Views.Grid view;
 
@@ -36,91 +22,138 @@ namespace GameOfLife
             timer.Tick += new EventHandler(Timer_Tick);
             timer.Interval = TimeSpan.FromSeconds(1);
 
-            npWidth.SetValue(10);
-            npHeight.SetValue(10);
+            numberWidth.SetValue(10);
+            numberHeight.SetValue(10);
 
-            SetGrid(new Views.Grid(new Models.Grid(10, 10)));
+            view = grid;
 
             DisplayStatistics();
         }
 
-        private void StartButton_Clicked(object sender, RoutedEventArgs args)
+        /// <summary>
+        /// Appelé lorsque le bouton start est clické
+        /// </summary>
+        /// <param name="sender">objet appelant cet méthode</param>
+        /// <param name="args">arguments lié à l'événement</param>
+        private void buttonStart_Clicked(object sender, RoutedEventArgs args)
         {
             timer.Start();
         }
 
-        private void StopButton_Clicked(object sender, RoutedEventArgs args)
+        /// <summary>
+        /// Appelé lorsque le bouton stop est clické
+        /// </summary>
+        /// <param name="sender">objet appelant cet méthode</param>
+        /// <param name="args">arguments lié à l'événement</param>
+        private void buttonStop_Clicked(object sender, RoutedEventArgs args)
         {
             timer.Stop();
         }
 
-        private void ResetButton_Clicked(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Appelé lorsque le bouton reset est clické
+        /// </summary>
+        /// <param name="sender">objet appelant cet méthode</param>
+        /// <param name="args">arguments lié à l'événement</param>
+        private void buttonReset_Clicked(object sender, RoutedEventArgs e)
         {
-            view.Model.Clear();
+            view.ViewModel.Clear();
             view.Refresh();
             DisplayStatistics();
         }
 
-        private void RandomizeButton_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Appelé lorsque le bouton randomize est clické
+        /// </summary>
+        /// <param name="sender">objet appelant cet méthode</param>
+        /// <param name="args">arguments lié à l'événement</param>
+        private void buttonRandomize_Click(object sender, RoutedEventArgs e)
         {
-            view.Model.Randomize();
+            view.ViewModel.Randomize();
             view.Refresh();
             DisplayStatistics();
         }
 
-        private void GridPanel_SizeChanged(object sender, SizeChangedEventArgs e)
+        /// <summary>
+        /// Appelé lorsque le panel contenant la grille est resize
+        /// </summary>
+        /// <param name="sender">objet appelant cet méthode</param>
+        /// <param name="e">arguments lié à l'événement</param>
+        private void panelGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             view.ChangeSize(e.NewSize.Width, e.NewSize.Height);
         }
 
-        private void SpeedSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        /// <summary>
+        /// Appelé lorsque la valeur de slider change
+        /// </summary>
+        /// <param name="sender">objet appelant cet méthode</param>
+        /// <param name="e">arguments lié à l'événement</param>
+        private void sliderSpeed_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if(timer != null)
             {
                 double newSpeed = e.NewValue;
                 timer.Interval = TimeSpan.FromSeconds(newSpeed);
-                speedLabel.Content = Math.Round(newSpeed, 2) + " secondes";
+                labelSpeed.Content = Math.Round(newSpeed, 2) + " secondes";
             }
         }
 
-        private void SizeButton_Click(object sender, RoutedEventArgs args)
+        /// <summary>
+        /// Appelé lorsque le bouton de redimensionnement est clické
+        /// </summary>
+        /// <param name="sender">objet appelant cet méthode</param>
+        /// <param name="args">arguments lié à l'événement</param>
+        private void buttonSize_Click(object sender, RoutedEventArgs args)
         {
-            Models.Grid model = view.Model;
-            int width = Convert.ToInt32(npWidth.Value);
-            int height = Convert.ToInt32(npHeight.Value);
+            ViewModels.Grid viewModel = view.ViewModel;
+            int width = Convert.ToInt32(numberWidth.Value);
+            int height = Convert.ToInt32(numberHeight.Value);
 
-            if (model.Width != width || model.Height != height)
+            if (viewModel.Width != width || viewModel.Height != height)
             {
                 SetGrid(view.Resize(width, height));
-                view.ChangeSize(GridPanel.ActualWidth, GridPanel.ActualHeight);
+                view.ChangeSize(panelGrid.ActualWidth, panelGrid.ActualHeight);
                 view.Refresh();
             }
             DisplayStatistics();
         }
 
+        /// <summary>
+        /// Appelé lorsque le timer effectue un tick
+        /// </summary>
+        /// <param name="sender">objet appelant cet méthode</param>
+        /// <param name="args">arguments lié à l'événement</param>
         private void Timer_Tick(Object sender, EventArgs args)
         {
-            GameOfLifeAlgorithm.Update(view.Model);
+            GameOfLifeAlgorithm.Update(view.ViewModel);
             view.Refresh();
             DisplayStatistics();
         }
 
+        /// <summary>
+        /// Change de grille affichée sur l'interface
+        /// </summary>
+        /// <param name="newGrid">La nouvelle grille</param>
         private void SetGrid(Views.Grid newGrid)
         {
             view = newGrid;
-            GridPanel.Children.Clear();   
-            GridPanel.Children.Add(newGrid);
+            panelGrid.Children.Clear();   
+            panelGrid.Children.Add(newGrid);
         }
 
+        /// <summary>
+        /// Affiche les statistiques sur l'interface
+        /// </summary>
         private void DisplayStatistics()
         {
-            Statistics statistics = view.Model.Statistics;
+            Statistics statistics = view.ViewModel.Statistics;
 
-            lblIterations.Content = "Itérations : " + statistics.iterations;
-            lblPopulation.Content = "Population actuelle : " + statistics.population;
-            lblMaxPopulation.Content = "Population max : " + statistics.greatestPopulation;
-            lblMinPopulation.Content = "Population min : " + statistics.smallestPopulation;
-            lblOldest.Content = "Age maximal : " + statistics.oldestCell;
+            labelIterations.Content = "Itérations : " + statistics.iterations;
+            labelPopulation.Content = "Population actuelle : " + statistics.population;
+            labelMaxPopulation.Content = "Population max : " + statistics.greatestPopulation;
+            labelMinPopulation.Content = "Population min : " + statistics.smallestPopulation;
+            labelOldest.Content = "Age maximal : " + statistics.oldestCell;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using GameOfLife.Models;
+﻿using GameOfLife.Enums;
+using GameOfLife.Models;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,17 +12,15 @@ namespace GameOfLife.Views
     class Cell : Button
     {
         //Attributs
-        private Models.Cell model;
-        private Statistics statistics;
+        private ViewModels.Cell viewModel;
         
         /// <summary>
         /// Constructeur de la classe Cell (View)
         /// </summary>
         /// <param name="model">Modèle de la cellule</param>
-        public Cell(Models.Cell model, Statistics statistics) : base()
+        public Cell(ViewModels.Cell viewModel) : base()
         {
-            this.model = model;
-            this.statistics = statistics;
+            this.viewModel = viewModel;
 
             Init();
             RegisterEvents();
@@ -50,32 +49,13 @@ namespace GameOfLife.Views
         /// <param name="args">Arguments concernant l'évévenemnt</param>
         private void OnMouseClick(Object sender, RoutedEventArgs args)
         {
-            model.State = (Models.Cell.CellState)((int)(model.State + 1) % 2);
-
-            UpdateColor();
+            viewModel.State = (CellState)((int)(viewModel.State + 1) % 2);
+            this.Background = viewModel.GetColor();
         }
 
-        /// <summary>
-        /// Change la couleur en fonction de l'état actuel de la cellule
-        /// </summary>
-        public void UpdateColor()
+        public ViewModels.Cell ViewModel
         {
-            switch(model.State)
-            {
-                case Models.Cell.CellState.Alive:
-                    this.Background = Brushes.Green;
-                    break;
-
-                case Models.Cell.CellState.Dead:
-                default:
-                    this.Background = Brushes.Transparent;
-                    break;
-            }
-        }
-
-        private Models.Cell Model
-        {
-            get { return model; }
+            get { return viewModel; }
         }
     }
 }

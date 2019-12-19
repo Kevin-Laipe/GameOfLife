@@ -7,17 +7,23 @@ namespace GameOfLife.Views
 {
     class Grid : System.Windows.Controls.Grid
     {
-        private Models.Grid model;
+        //Attributs
+        private ViewModels.Grid viewModel;
         private Cell[,] cells;
 
         /// <summary>
         /// Constructeur de la classe Grid (View)
         /// </summary>
         /// <param name="model">Modèle de la grille</param>
-        public Grid(Models.Grid model)
+        public Grid() : this(10, 10)
         {
-            this.model = model;
-            cells = new Cell[model.Width, model.Height];
+
+        }
+
+        public Grid(int width, int height)
+        {
+            this.viewModel = new ViewModels.Grid(width, height);
+            cells = new Cell[viewModel.Width, viewModel.Height];
 
             Init();
             this.VerticalAlignment = VerticalAlignment.Center;
@@ -29,22 +35,22 @@ namespace GameOfLife.Views
         /// </summary>
         private void Init()
         {
-            for(int x = 0; x < model.Width; x++)
+            for(int x = 0; x < viewModel.Width; x++)
             {
                 this.ColumnDefinitions.Add(new ColumnDefinition());
             }
 
-            for(int y = 0; y < model.Height; y++)
+            for(int y = 0; y < viewModel.Height; y++)
             {
                 this.RowDefinitions.Add(new RowDefinition());
             }
 
-            for(int y = 0; y < model.Height; y++)
+            for(int y = 0; y < viewModel.Height; y++)
             {
-                for(int x = 0; x < model.Width; x++)
+                for(int x = 0; x < viewModel.Width; x++)
                 {
                     //Création des cellules et ajout à la grille
-                    Cell newCell = new Cell(model[x, y], model.Statistics);
+                    Cell newCell = new Cell(viewModel[x, y]);
                     cells[x, y] = newCell;
                     this.Children.Add(newCell);
                     Grid.SetColumn(newCell, x);
@@ -60,7 +66,7 @@ namespace GameOfLife.Views
         {
             foreach(Cell cell in cells)
             {
-                cell.UpdateColor();
+                cell.Background = cell.ViewModel.GetColor();
             }
         }
 
@@ -72,14 +78,14 @@ namespace GameOfLife.Views
         /// <returns>Grille redimensionnée</returns>
         public Grid Resize(int rows, int columns)
         {
-            Grid newGrid = new Grid(new Models.Grid(rows, columns));
+            Grid newGrid = new Grid(rows, columns);
 
-            for(int y = 0; y < model.Height; y++)
+            for(int y = 0; y < viewModel.Height; y++)
             {
-                for(int x = 0; x < model.Width; x++)
+                for(int x = 0; x < viewModel.Width; x++)
                 {
-                    if(x < newGrid.Model.Width && y < newGrid.Model.Height)
-                        newGrid.model[x, y].State = model[x, y].State;
+                    if(x < newGrid.ViewModel.Width && y < newGrid.ViewModel.Height)
+                        newGrid.viewModel[x, y].State = viewModel[x, y].State;
                 }
             }
 
@@ -93,13 +99,13 @@ namespace GameOfLife.Views
         /// <param name="height">Hauteur de la grille (pixel)</param>
         public void ChangeSize(double width, double height)
         {
-            double horizontal_size = width / model.Width;
-            double vertical_size = height / model.Height;
+            double horizontal_size = width / viewModel.Width;
+            double vertical_size = height / viewModel.Height;
 
             double size = (horizontal_size < vertical_size) ? horizontal_size : vertical_size;
 
-            this.Width = size * model.Width;
-            this.Height = size * model.Height;
+            this.Width = size * viewModel.Width;
+            this.Height = size * viewModel.Height;
         }
 
         /// <summary>
@@ -116,9 +122,9 @@ namespace GameOfLife.Views
         /// <summary>
         /// Modèle représentant la grille
         /// </summary>
-        public Models.Grid Model
+        public ViewModels.Grid ViewModel
         {
-            get { return model; }
+            get { return viewModel; }
         }
     }
 }

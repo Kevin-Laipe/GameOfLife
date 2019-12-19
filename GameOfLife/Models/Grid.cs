@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameOfLife.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,9 +38,9 @@ namespace GameOfLife.Models
             Random random = new Random();
             foreach (Cell cell in cells)
             {
-                cell.State = (Cell.CellState)random.Next(0, 2);
+                cell.State = (CellState)random.Next(0, 2);
 
-                if (cell.State == Cell.CellState.Alive)
+                if (cell.State == CellState.Alive)
                     statistics.population += 1;
             }
 
@@ -56,7 +57,7 @@ namespace GameOfLife.Models
 
             foreach(Cell cell in cells)
             {
-                cell.State = Cell.CellState.Dead;
+                cell.State = CellState.Dead;
             }
         }
 
