@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Media;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace GameOfLife.Views
 {
@@ -54,6 +55,7 @@ namespace GameOfLife.Views
                 {
                     Cell newCell = new Cell(ViewModel[x, y]);
                     cells[x, y] = newCell;
+                    newCell.Click += new RoutedEventHandler(OnCellClicked);
                     this.Children.Add(newCell);
                     Grid.SetColumn(newCell, x);
                     Grid.SetRow(newCell, y);
@@ -64,6 +66,7 @@ namespace GameOfLife.Views
         private void RegisterEvents()
         {
             viewModel.PropertyChanged += new PropertyChangedEventHandler(OnPropertyChanged);
+            
         }
 
         /*===============================*\
@@ -115,9 +118,12 @@ namespace GameOfLife.Views
         |*            Events             *|
         \*===============================*/
 
-        private void OnCellClicked()
+        private void OnCellClicked(object sender, RoutedEventArgs args)
         {
+            var patternVM = (PatternViewModel)DataContext;
+            Debug.WriteLine(patternVM.SelectedPattern.Name);
 
+            
         }
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)

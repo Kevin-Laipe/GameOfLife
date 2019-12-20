@@ -15,16 +15,20 @@ namespace GameOfLife.Models
         private CellState state;
         private CellState nextState;
         private int age;
+        private int x;
+        private int y;
 
         /*===============================*\
         |*        Constructeurs          *|
         \*===============================*/
 
-        public Cell()
+        public Cell(int x, int y)
         {
             state = CellState.Dead;
             nextState = CellState.Dead;
             age = 0;
+            this.x = x;
+            this.y = y;
         }
 
         /*===============================*\
@@ -40,6 +44,18 @@ namespace GameOfLife.Models
         public int Age
         {
             get { return age; }
+        }
+
+        public int X
+        {
+            get { return x; }
+            set { x = value; }
+        }
+
+        public int Y
+        {
+            get { return y; }
+            set { y = value; }
         }
     }
 }
