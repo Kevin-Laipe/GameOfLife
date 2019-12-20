@@ -1,6 +1,7 @@
 ﻿using GameOfLife.Models;
 using System;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
 namespace GameOfLife
@@ -13,6 +14,7 @@ namespace GameOfLife
         //Attributs
         DispatcherTimer timer;
         Views.Grid view;
+        private bool comboboxHandle = true;
 
         public MainWindow()
         {
@@ -24,6 +26,31 @@ namespace GameOfLife
 
             numberWidth.SetValue(10);
             numberHeight.SetValue(10);
+
+            var patternVM = new PatternViewModel();
+            patternVM.Patterns.Add(new Pattern
+            {
+                Name = "Cellule",
+                Image = new BitmapImage(new Uri("pack://application:,,,/images/cellule.PNG")),
+                Cells = new int[,] { { 0 } }
+            });
+
+            patternVM.Patterns.Add(new Pattern
+            {
+                Name = "Glider",
+                Image = new BitmapImage(new Uri("pack://application:,,,/images/glider.PNG")),
+                Cells = new int[,] { { 1, 1, 0 }, { 0, 1, 0 }, { 1, 0, 0 } }
+            });
+
+            patternVM.Patterns.Add(new Pattern
+            {
+                Name = "Lightweight Spaceship",
+                Image = new BitmapImage(new Uri("pack://application:,,,/images/lwSpaceship.PNG")),
+                Cells = new int[,] { { 0, 0, 0, 1 }, { 0, 1, 1, 0 }, { 0, 1, 1, 1 }, { 0, 1, 1, 1 }, { 1, 0, 1, 0 } }
+            });
+            patternVM.SelectedPattern = patternVM.Patterns[0];
+
+            DataContext = patternVM;
 
             view = grid;
         }

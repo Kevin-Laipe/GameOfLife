@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GameOfLife"
         xmlns:views="clr-namespace:GameOfLife.Views"
         mc:Ignorable="d"
-        Title="Game Of Life" Height="450" Width="800">
+        Title="Game Of Life" Height="500" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="170" />
@@ -42,6 +42,18 @@
                         <Slider x:Name="sliderSpeed" ValueChanged="sliderSpeed_ValueChanged" Value="1" Width="100" Minimum="0.01" Maximum="10"/>
                         <Label x:Name="labelSpeed">1 secondes</Label>
                     </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Outil de dessin">
+                    <ComboBox x:Name="patternCombobox" ItemsSource="{Binding Patterns}" SelectedItem="{Binding SelectedPattern}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding Image}" Height="16" Width="16"></Image>
+                                    <TextBlock Text="{Binding Name}"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </GroupBox>
                 <views:Statistics />
                 <Button x:Name="buttonStart" Click="buttonStart_Clicked">Start</Button>

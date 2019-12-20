@@ -1,6 +1,7 @@
 ﻿using GameOfLife.Enums;
 using GameOfLife.Models;
 using System;
+using System.Diagnostics;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;

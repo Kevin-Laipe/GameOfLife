@@ -75,6 +75,18 @@ namespace GameOfLife.ViewModels
             get { return model.Age; }
         }
 
+        public int X
+        {
+            get { return model.X; }
+            set { model.X = value; }
+        }
+
+        public int Y
+        {
+            get { return model.Y; }
+            set { model.Y = value; }
+        }
+
         /*===============================*\
         |*            Events             *|
         \*===============================*/

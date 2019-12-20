@@ -59,7 +59,7 @@ namespace GameOfLife.Models
             {
                 for (int x = 0; x < width; x++)
                 {
-                    cells[x, y] = new Cell();
+                    cells[x, y] = new Cell(x, y);
                 }
             }
         }
