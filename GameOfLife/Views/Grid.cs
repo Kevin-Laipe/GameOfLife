@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.ComponentModel;
 using System.Diagnostics;
+using GameOfLife.Enums;
 
 namespace GameOfLife.Views
 {
@@ -121,7 +122,6 @@ namespace GameOfLife.Views
         private void OnCellClicked(object sender, RoutedEventArgs args)
         {
             var patternVM = (PatternViewModel)DataContext;
-            Debug.WriteLine(patternVM.SelectedPattern.Name);
 
             Cell cell = (Cell)sender;
             int xStart = cell.ViewModel.X;
@@ -133,14 +133,9 @@ namespace GameOfLife.Views
             {
                 for (int y = yStart; y < yStart + patternHeight; y++)
                 {
-                    if (patternVM.SelectedPattern.Cells[x - xStart, y - yStart] == 0)
-                    {
-                        cells[x % viewModel.Width, y % viewModel.Height].ViewModel.State = Enums.CellState.Alive;
-                    }
-                    else
-                    {
-                        cells[x % viewModel.Width, y % viewModel.Height].ViewModel.State = Enums.CellState.Dead;
-                    }
+                    Cell currentCell = cells[x % viewModel.Width, y % viewModel.Height];
+                    currentCell.ViewModel.State = (CellState)((int)(currentCell.ViewModel.State + patternVM.SelectedPattern.Cells[x - xStart, y - yStart]) % 2);
+                    //viewModel.State = (CellState)((int)(viewModel.State + 1) % 2);
                 }
             }
         }
