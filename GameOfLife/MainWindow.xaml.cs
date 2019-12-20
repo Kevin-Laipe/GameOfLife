@@ -39,14 +39,14 @@ namespace GameOfLife
             {
                 Name = "Glider",
                 Image = new BitmapImage(new Uri("pack://application:,,,/images/glider.PNG")),
-                Cells = new int[,] { { 0, 0, 0 }, { 1, 1, 0 }, { 0, 1, 0 } }
+                Cells = new int[,] { { 1, 1, 0 }, { 0, 1, 0 }, { 1, 0, 0 } }
             });
 
             patternVM.Patterns.Add(new Pattern
             {
-                Name = "Lightwieght Spaceship",
+                Name = "Lightweight Spaceship",
                 Image = new BitmapImage(new Uri("pack://application:,,,/images/lwSpaceship.PNG")),
-                Cells = new int[,] { { 1, 0, 1, 1, 0 }, { 0, 1, 1, 1, 1 }, { 0, 1, 1, 1, 0 }, { 0, 0, 0, 0, 1 } }
+                Cells = new int[,] { { 0, 0, 0, 1 }, { 0, 1, 1, 0 }, { 0, 1, 1, 1 }, { 0, 1, 1, 1 }, { 1, 0, 1, 0 } }
             });
             patternVM.SelectedPattern = patternVM.Patterns[0];
 
