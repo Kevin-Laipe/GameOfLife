@@ -1,4 +1,5 @@
-﻿using GameOfLife.Models;
+﻿using GameOfLife.Enums;
+using GameOfLife.ViewModels;
 using System.Windows;
 
 namespace GameOfLife
@@ -7,42 +8,25 @@ namespace GameOfLife
     {
         private static Point[] neighborsPos = { new Point(1, 1), new Point(-1, -1), new Point(-1, 1), new Point(1, -1), new Point(0, 1), new Point(1, 0), new Point(0, -1), new Point(-1, 0) };
 
-        public static void Update(Models.Grid grid)
+        public static void Update(Grid grid)
         {
             PrepareNextValues(grid);
             ApplyNextValues(grid);
-
-            grid.Statistics.iterations += 1;
         }
 
         private static void ApplyNextValues(Grid grid)
         {
-            grid.Statistics.population = 0;
-
             for(int y = 0; y < grid.Height; y++)
             {
                 for(int x = 0; x < grid.Width; x++)
                 {
                     grid[x, y].Apply();
-
-                    if (grid.Statistics.oldestCell < grid[x, y].Age)
-                        grid.Statistics.oldestCell = grid[x, y].Age;
-                    if (grid[x, y].State == Cell.CellState.Alive)
-                        grid.Statistics.population += 1;
-
                 }
             }
-
-            if (grid.Statistics.population > grid.Statistics.greatestPopulation)
-                grid.Statistics.greatestPopulation = grid.Statistics.population;
-            if (grid.Statistics.smallestPopulation == 0 || grid.Statistics.population < grid.Statistics.smallestPopulation)
-                grid.Statistics.smallestPopulation = grid.Statistics.population;
         }
 
-        private static Cell.CellState[,] PrepareNextValues(Grid grid)
+        private static void PrepareNextValues(Grid grid)
         {
-            Cell.CellState[,] nextValues = new Cell.CellState[grid.Width, grid.Height];
-
             for(int y = 0; y < grid.Height; y++)
             {
                 for(int x = 0; x < grid.Width; x++)
@@ -50,17 +34,15 @@ namespace GameOfLife
                     grid[x, y].Prepare(GetCellNextValue(grid, x, y));
                 }
             }
-
-            return nextValues;
         }
 
-        private static Cell.CellState GetCellNextValue(Grid grid, int x, int y)
+        private static CellState GetCellNextValue(Grid grid, int x, int y)
         {
             Cell[] neighbors = GetCellNeighbors(grid, x, y);
             int alive = 0;
             foreach(Cell neighbor in neighbors)
             {
-                if (neighbor.State == Cell.CellState.Alive)
+                if (neighbor.State == CellState.Alive)
                     alive++;
             }
 
@@ -69,9 +51,9 @@ namespace GameOfLife
                 case 2:
                     return grid[x, y].State;
                 case 3:
-                    return (grid[x, y].State == Cell.CellState.Dead) ? Cell.CellState.Alive : grid[x, y].State;
+                    return (grid[x, y].State == CellState.Dead) ? CellState.Alive : grid[x, y].State;
                 default:
-                    return Cell.CellState.Dead;
+                    return CellState.Dead;
             }
         }
 

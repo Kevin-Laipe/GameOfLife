@@ -1,6 +1,8 @@
-﻿using GameOfLife.Models;
+﻿using GameOfLife.Enums;
+using GameOfLife.Models;
 using System;
 using System.Diagnostics;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -11,76 +13,62 @@ namespace GameOfLife.Views
 {
     class Cell : Button
     {
-        //Attributs
-        private Models.Cell model;
-        private Statistics statistics;
+        /*===============================*\
+        |*           Attributs           *|
+        \*===============================*/
+        private ViewModels.Cell viewModel;
         
-        /// <summary>
-        /// Constructeur de la classe Cell (View)
-        /// </summary>
-        /// <param name="model">Modèle de la cellule</param>
-        public Cell(Models.Cell model, Statistics statistics) : base()
+        /*===============================*\
+        |*        Constructeurs          *|
+        \*===============================*/
+
+        public Cell(ViewModels.Cell viewModel) : base()
         {
-            this.model = model;
-            this.statistics = statistics;
+            this.viewModel = viewModel;
 
             Init();
             RegisterEvents();
         }
 
-        /// <summary>
-        /// Initialisation de l'objet
-        /// </summary>
+        /*===============================*\
+        |*        Méthodes Privées       *|
+        \*===============================*/
+
         private void Init()
         {
             this.Background = Brushes.Transparent;
         }
 
-        /// <summary>
-        /// Ajoute tous les événements de cet objet
-        /// </summary>
         private void RegisterEvents()
         {
             this.Click += new RoutedEventHandler(OnMouseClick);
+            viewModel.PropertyChanged += new PropertyChangedEventHandler(OnPropertyChanged);
         }
 
-        /// <summary>
-        /// Fonction appelée lorsque la souris clique sur cet élément
-        /// </summary>
-        /// <param name="sender">Objet qui appelle la fonction (Dans ce cas toujours une cellule)</param>
-        /// <param name="args">Arguments concernant l'évévenemnt</param>
+        /*===============================*\
+        |*          Accesseurs           *|
+        \*===============================*/
+
+        public ViewModels.Cell ViewModel
+        {
+            get { return viewModel; }
+        }
+
+        /*===============================*\
+        |*             Events            *|
+        \*===============================*/
+
         private void OnMouseClick(Object sender, RoutedEventArgs args)
         {
-            var patternVM = (PatternViewModel)DataContext;
-
-            Debug.WriteLine(patternVM.SelectedPattern.Name);
-
-            model.State = (Models.Cell.CellState)((int)(model.State + 1) % 2);
-
-            UpdateColor();
+            viewModel.State = (CellState)((int)(viewModel.State + 1) % 2);
         }
 
-        /// <summary>
-        /// Change la couleur en fonction de l'état actuel de la cellule
-        /// </summary>
-        public void UpdateColor()
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
-            switch(model.State)
+            if(args.PropertyName == "State")
             {
-                case Models.Cell.CellState.Alive:
-                    this.Background = Brushes.Green;
-                    break;
-
-                case Models.Cell.CellState.Dead:
-                default:
-                    this.Background = Brushes.Transparent;
-                    break;
+                this.Background = viewModel.GetColor();
             }
-        }
-
-        private Models.Cell Model
-        {
-            get { return model; }
         }
     }
 }

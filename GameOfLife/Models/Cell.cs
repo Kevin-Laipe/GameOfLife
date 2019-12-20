@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameOfLife.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,19 +9,17 @@ namespace GameOfLife.Models
 {
     class Cell
     {
-        /// <summary>
-        /// Etats possibles d'une cellule
-        /// </summary>
-        public enum CellState { Alive, Dead}
-
-        //Attributs
+        /*===============================*\
+        |*           Attributs           *|
+        \*===============================*/
         private CellState state;
         private CellState nextState;
         private int age;
-        
-        /// <summary>
-        /// Constructeur de la classe Cell (Modèle)
-        /// </summary>
+
+        /*===============================*\
+        |*        Constructeurs          *|
+        \*===============================*/
+
         public Cell()
         {
             state = CellState.Dead;
@@ -28,24 +27,10 @@ namespace GameOfLife.Models
             age = 0;
         }
 
-        public void Prepare(CellState nextState)
-        {
-            this.nextState = nextState;
-        }
+        /*===============================*\
+        |*          Accesseurs           *|
+        \*===============================*/
 
-        public void Apply()
-        {
-            state = nextState;
-
-            if (state == CellState.Dead)
-                age = 0;
-            else
-                age++;
-        }
-
-        /// <summary>
-        /// Etat de la cellule
-        /// </summary>
         public CellState State
         {
             get { return state; }

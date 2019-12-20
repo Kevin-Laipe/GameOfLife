@@ -29,18 +29,18 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-
+                        
                         <Label Grid.Row="0" Grid.Column="0">Largeur :</Label>
-                        <views:NumberPicker x:Name="npWidth" Grid.Row="0" Grid.Column="1" Value="10" Minimum="1" Maximum="50"/>
+                        <views:NumberPicker x:Name="numberWidth" Grid.Row="0" Grid.Column="1" Value="10" Minimum="1" Maximum="50"/>
                         <Label Grid.Row="1" Grid.Column="0">Hauteur:</Label>
-                        <views:NumberPicker x:Name="npHeight" Grid.Row="1" Grid.Column="1" Value="10" Minimum="1" Maximum="50"/>
-                        <Button x:Name="SizeButton" Grid.Row="2" Grid.ColumnSpan="2" Click="SizeButton_Click">Valider</Button>
+                        <views:NumberPicker x:Name="numberHeight" Grid.Row="1" Grid.Column="1" Value="10" Minimum="1" Maximum="50"/>
+                        <Button x:Name="buttonSize" Grid.Row="2" Grid.ColumnSpan="2" Click="buttonSize_Click">Valider</Button>
                     </Grid>
                 </GroupBox>
                 <GroupBox Header="Vitesse">
                     <StackPanel>
-                        <Slider x:Name="speedSlider" ValueChanged="SpeedSlider_ValueChanged" Value="1" Width="100" Minimum="0.01" Maximum="10"/>
-                        <Label x:Name="speedLabel">1 secondes</Label>
+                        <Slider x:Name="sliderSpeed" ValueChanged="sliderSpeed_ValueChanged" Value="1" Width="100" Minimum="0.01" Maximum="10"/>
+                        <Label x:Name="labelSpeed">1 secondes</Label>
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Header="Outil de dessin">
@@ -55,21 +55,15 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                 </GroupBox>
-                <GroupBox Header="Statistiques">
-                    <StackPanel>
-                        <Label x:Name="lblIterations"/>
-                        <Label x:Name="lblPopulation"/>
-                        <Label x:Name="lblMinPopulation"/>
-                        <Label x:Name="lblMaxPopulation"/>
-                        <Label x:Name="lblOldest"/>
-                    </StackPanel>
-                </GroupBox>
-                <Button x:Name="startButton" Click="StartButton_Clicked">Start</Button>
-                <Button x:Name="stopButton" Click="StopButton_Clicked">Stop</Button>
-                <Button x:Name="resetButton" Click="ResetButton_Clicked">Reset</Button>
-                <Button x:Name="randomizeButton" Click="RandomizeButton_Click">Randomize</Button>
+                <views:Statistics />
+                <Button x:Name="buttonStart" Click="buttonStart_Clicked">Start</Button>
+                <Button x:Name="buttonStop" Click="buttonStop_Clicked">Stop</Button>
+                <Button x:Name="buttonReset" Click="buttonReset_Clicked">Reset</Button>
+                <Button x:Name="buttonRandomize" Click="buttonRandomize_Click">Randomize</Button>
             </StackPanel>
         </StackPanel>
-        <DockPanel x:Name="GridPanel" SizeChanged="GridPanel_SizeChanged" Grid.Row="0" Grid.Column="1" Margin="10,10,10,10" />
+        <DockPanel x:Name="panelGrid" SizeChanged="panelGrid_SizeChanged" Grid.Row="0" Grid.Column="1" Margin="10,10,10,10">
+            <views:Grid x:Name="grid" />
+        </DockPanel>
     </Grid>
 </Window>    

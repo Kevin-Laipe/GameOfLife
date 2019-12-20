@@ -1,20 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace GameOfLife.Views
 {
     class NumberPicker : TextBox
     {
+        /*===============================*\
+        |*           Attributs           *|
+        \*===============================*/
         int value;
         int minValue;
         int maxValue;
 
+        /*===============================*\
+        |*         Constructeurs         *|
+        \*===============================*/
         public NumberPicker()
         {
             RegisterEvents();
@@ -26,6 +27,9 @@ namespace GameOfLife.Views
             Text = Convert.ToString(value);
         }
 
+        /*===============================*\
+        |*       Méthodes publiques      *|
+        \*===============================*/
         public void SetValue(string newValue)
         {
             try
@@ -49,6 +53,10 @@ namespace GameOfLife.Views
             Text = Convert.ToString(value);
         }
 
+        /*===============================*\
+        |*       Méthodes privées        *|
+        \*===============================*/
+
         private void RegisterEvents()
         {
             this.LostFocus += new RoutedEventHandler(OnLostFocus);
@@ -65,6 +73,10 @@ namespace GameOfLife.Views
             SetValue(Text);
         }
 
+        /*===============================*\
+        |*           Accesseurs          *|
+        \*===============================*/
+
         /// <summary>
         /// Valeur du number picker
         /// </summary>
@@ -74,18 +86,12 @@ namespace GameOfLife.Views
             set { SetValue(value); }
         }
 
-        /// <summary>
-        /// Valeur minimal du number picker
-        /// </summary>
         public string Minimum
         {
             get { return Convert.ToString(minValue); }
             set { minValue = Convert.ToInt32(value); }
         }
 
-        /// <summary>
-        /// Valeur maximal du number picker
-        /// </summary>
         public string Maximum
         {
             get { return Convert.ToString(maxValue); }

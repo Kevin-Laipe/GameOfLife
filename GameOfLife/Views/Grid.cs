@@ -2,49 +2,57 @@
 using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Media;
+using System.ComponentModel;
 
 namespace GameOfLife.Views
 {
     class Grid : System.Windows.Controls.Grid
     {
-        private Models.Grid model;
+        /*===============================*\
+        |*           Attributs           *|
+        \*===============================*/
+        private ViewModels.Grid viewModel;
         private Cell[,] cells;
 
-        /// <summary>
-        /// Constructeur de la classe Grid (View)
-        /// </summary>
-        /// <param name="model">Modèle de la grille</param>
-        public Grid(Models.Grid model)
+        /*===============================*\
+        |*         Constructeurs         *|
+        \*===============================*/
+
+        public Grid() : this(10, 10) { }
+
+        public Grid(int width, int height)
         {
-            this.model = model;
-            cells = new Cell[model.Width, model.Height];
+            this.viewModel = new ViewModels.Grid(width, height);
+            cells = new Cell[viewModel.Width, viewModel.Height];
 
             Init();
+            RegisterEvents();
+
             this.VerticalAlignment = VerticalAlignment.Center;
             this.HorizontalAlignment = HorizontalAlignment.Center;
         }
 
-        /// <summary>
-        /// Initialisation de la grille
-        /// </summary>
+        /*===============================*\
+        |*       Méthodes privées        *|
+        \*===============================*/
+
         private void Init()
         {
-            for(int x = 0; x < model.Width; x++)
+            for(int x = 0; x < viewModel.Width; x++)
             {
                 this.ColumnDefinitions.Add(new ColumnDefinition());
             }
 
-            for(int y = 0; y < model.Height; y++)
+            for(int y = 0; y < viewModel.Height; y++)
             {
                 this.RowDefinitions.Add(new RowDefinition());
             }
 
-            for(int y = 0; y < model.Height; y++)
+            for(int y = 0; y < viewModel.Height; y++)
             {
-                for(int x = 0; x < model.Width; x++)
+                for(int x = 0; x < viewModel.Width; x++)
                 {
-                    //Création des cellules et ajout à la grille
-                    Cell newCell = new Cell(model[x, y], model.Statistics);
+                    Cell newCell = new Cell(ViewModel[x, y]);
                     cells[x, y] = newCell;
                     this.Children.Add(newCell);
                     Grid.SetColumn(newCell, x);
@@ -53,72 +61,71 @@ namespace GameOfLife.Views
             }
         }
 
-        /// <summary>
-        /// Met à jour les couleurs des cellules
-        /// </summary>
-        public void Refresh()
+        private void RegisterEvents()
         {
-            foreach(Cell cell in cells)
-            {
-                cell.UpdateColor();
-            }
+            viewModel.PropertyChanged += new PropertyChangedEventHandler(OnPropertyChanged);
         }
 
-        /// <summary>
-        /// Modifie le nombre de lignes et de colonnes de la grille
-        /// </summary>
-        /// <param name="rows">Nombre de lignes</param>
-        /// <param name="columns">Nombre de colonnes</param>
-        /// <returns>Grille redimensionnée</returns>
+        /*===============================*\
+        |*      Méthodes publiques       *|
+        \*===============================*/
+
         public Grid Resize(int rows, int columns)
         {
-            Grid newGrid = new Grid(new Models.Grid(rows, columns));
+            Grid newGrid = new Grid(rows, columns);
 
-            for(int y = 0; y < model.Height; y++)
+            for(int y = 0; y < viewModel.Height; y++)
             {
-                for(int x = 0; x < model.Width; x++)
+                for(int x = 0; x < viewModel.Width; x++)
                 {
-                    if(x < newGrid.Model.Width && y < newGrid.Model.Height)
-                        newGrid.model[x, y].State = model[x, y].State;
+                    if(x < newGrid.ViewModel.Width && y < newGrid.ViewModel.Height)
+                        newGrid.viewModel[x, y].State = viewModel[x, y].State;
                 }
             }
 
             return newGrid;
         }
 
-        /// <summary>
-        /// Redimensionne (pixel) la taille de la grille.
-        /// </summary>
-        /// <param name="width">Lageur de la grille (pixel)</param>
-        /// <param name="height">Hauteur de la grille (pixel)</param>
         public void ChangeSize(double width, double height)
         {
-            double horizontal_size = width / model.Width;
-            double vertical_size = height / model.Height;
+            double horizontal_size = width / viewModel.Width;
+            double vertical_size = height / viewModel.Height;
 
             double size = (horizontal_size < vertical_size) ? horizontal_size : vertical_size;
 
-            this.Width = size * model.Width;
-            this.Height = size * model.Height;
+            this.Width = size * viewModel.Width;
+            this.Height = size * viewModel.Height;
         }
 
-        /// <summary>
-        /// Cellule de la grille
-        /// </summary>
-        /// <param name="x">Colonne de la cellule</param>
-        /// <param name="y">Ligne de la cellule</param>
-        /// <returns></returns>
+        /*===============================*\
+        |*           Accesseurs          *|
+        \*===============================*/
+
         private Cell this[int x, int y]
         {
             get { return cells[x, y]; }
         }
 
-        /// <summary>
-        /// Modèle représentant la grille
-        /// </summary>
-        public Models.Grid Model
+        public ViewModels.Grid ViewModel
         {
-            get { return model; }
+            get { return viewModel; }
+        }
+
+        /*===============================*\
+        |*            Events             *|
+        \*===============================*/
+
+        private void OnCellClicked()
+        {
+
+        }
+
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
+        {
+            if(args.PropertyName == "Cell")
+            {
+                
+            }
         }
     }
 }
