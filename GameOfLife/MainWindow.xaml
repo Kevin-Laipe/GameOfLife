@@ -56,10 +56,10 @@
                     </ComboBox>
                 </GroupBox>
                 <views:Statistics />
-                <Button x:Name="buttonStart" Click="buttonStart_Clicked">Start</Button>
-                <Button x:Name="buttonStop" Click="buttonStop_Clicked">Stop</Button>
-                <Button x:Name="buttonReset" Click="buttonReset_Clicked">Reset</Button>
-                <Button x:Name="buttonRandomize" Click="buttonRandomize_Click">Randomize</Button>
+                <Button x:Name="buttonStart" Click="buttonStart_Clicked">Lecture</Button>
+                <Button x:Name="buttonStop" Click="buttonStop_Clicked">Pause</Button>
+                <Button x:Name="buttonReset" Click="buttonReset_Clicked">Réinitialisation</Button>
+                <Button x:Name="buttonRandomize" Click="buttonRandomize_Click">Aléatoire</Button>
             </StackPanel>
         </StackPanel>
         <DockPanel x:Name="panelGrid" SizeChanged="panelGrid_SizeChanged" Grid.Row="0" Grid.Column="1" Margin="10,10,10,10">
