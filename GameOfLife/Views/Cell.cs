@@ -1,6 +1,7 @@
 ﻿using GameOfLife.Enums;
 using GameOfLife.Models;
 using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -11,13 +12,15 @@ namespace GameOfLife.Views
 {
     class Cell : Button
     {
-        //Attributs
+        /*===============================*\
+        |*           Attributs           *|
+        \*===============================*/
         private ViewModels.Cell viewModel;
         
-        /// <summary>
-        /// Constructeur de la classe Cell (View)
-        /// </summary>
-        /// <param name="model">Modèle de la cellule</param>
+        /*===============================*\
+        |*        Constructeurs          *|
+        \*===============================*/
+
         public Cell(ViewModels.Cell viewModel) : base()
         {
             this.viewModel = viewModel;
@@ -26,36 +29,45 @@ namespace GameOfLife.Views
             RegisterEvents();
         }
 
-        /// <summary>
-        /// Initialisation de l'objet
-        /// </summary>
+        /*===============================*\
+        |*        Méthodes Privées       *|
+        \*===============================*/
+
         private void Init()
         {
             this.Background = Brushes.Transparent;
         }
 
-        /// <summary>
-        /// Ajoute tous les événements de cet objet
-        /// </summary>
         private void RegisterEvents()
         {
             this.Click += new RoutedEventHandler(OnMouseClick);
+            viewModel.PropertyChanged += new PropertyChangedEventHandler(OnPropertyChanged);
         }
 
-        /// <summary>
-        /// Fonction appelée lorsque la souris clique sur cet élément
-        /// </summary>
-        /// <param name="sender">Objet qui appelle la fonction (Dans ce cas toujours une cellule)</param>
-        /// <param name="args">Arguments concernant l'évévenemnt</param>
-        private void OnMouseClick(Object sender, RoutedEventArgs args)
-        {
-            viewModel.State = (CellState)((int)(viewModel.State + 1) % 2);
-            this.Background = viewModel.GetColor();
-        }
+        /*===============================*\
+        |*          Accesseurs           *|
+        \*===============================*/
 
         public ViewModels.Cell ViewModel
         {
             get { return viewModel; }
+        }
+
+        /*===============================*\
+        |*             Events            *|
+        \*===============================*/
+
+        private void OnMouseClick(Object sender, RoutedEventArgs args)
+        {
+            viewModel.State = (CellState)((int)(viewModel.State + 1) % 2);
+        }
+
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
+        {
+            if(args.PropertyName == "State")
+            {
+                this.Background = viewModel.GetColor();
+            }
         }
     }
 }

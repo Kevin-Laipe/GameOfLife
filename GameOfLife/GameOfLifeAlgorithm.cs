@@ -12,38 +12,21 @@ namespace GameOfLife
         {
             PrepareNextValues(grid);
             ApplyNextValues(grid);
-
-            grid.Statistics.iterations += 1;
         }
 
         private static void ApplyNextValues(Grid grid)
         {
-            grid.Statistics.population = 0;
-
             for(int y = 0; y < grid.Height; y++)
             {
                 for(int x = 0; x < grid.Width; x++)
                 {
                     grid[x, y].Apply();
-
-                    if (grid.Statistics.oldestCell < grid[x, y].Age)
-                        grid.Statistics.oldestCell = grid[x, y].Age;
-                    if (grid[x, y].State == CellState.Alive)
-                        grid.Statistics.population += 1;
-
                 }
             }
-
-            if (grid.Statistics.population > grid.Statistics.greatestPopulation)
-                grid.Statistics.greatestPopulation = grid.Statistics.population;
-            if (grid.Statistics.smallestPopulation == 0 || grid.Statistics.population < grid.Statistics.smallestPopulation)
-                grid.Statistics.smallestPopulation = grid.Statistics.population;
         }
 
-        private static CellState[,] PrepareNextValues(Grid grid)
+        private static void PrepareNextValues(Grid grid)
         {
-            CellState[,] nextValues = new CellState[grid.Width, grid.Height];
-
             for(int y = 0; y < grid.Height; y++)
             {
                 for(int x = 0; x < grid.Width; x++)
@@ -51,8 +34,6 @@ namespace GameOfLife
                     grid[x, y].Prepare(GetCellNextValue(grid, x, y));
                 }
             }
-
-            return nextValues;
         }
 
         private static CellState GetCellNextValue(Grid grid, int x, int y)

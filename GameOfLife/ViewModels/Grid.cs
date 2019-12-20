@@ -9,12 +9,15 @@ namespace GameOfLife.ViewModels
 {
     class Grid : INotifyPropertyChanged
     {
-        //Attributs
+        /*===============================*\
+        |*           Attributs           *|
+        \*===============================*/
         private Models.Grid model;
         private Cell[,] cells;
 
-        //Events
-        public event PropertyChangedEventHandler PropertyChanged;
+        /*===============================*\
+        |*         Constructeurs         *|
+        \*===============================*/
 
         public Grid(int width, int height)
         {
@@ -29,6 +32,10 @@ namespace GameOfLife.ViewModels
                 }
             }
         }
+
+        /*===============================*\
+        |*          Accesseurs           *|
+        \*===============================*/
 
         public void Randomize()
         {
@@ -60,10 +67,10 @@ namespace GameOfLife.ViewModels
             get { return model.Height; }
         }
 
-        public Models.Statistics Statistics
-        {
-            get { return model.Statistics; }
-        }
+        /*===============================*\
+        |*            Events             *|
+        \*===============================*/
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void RaisePropertyChanged(string propertyName)
         {

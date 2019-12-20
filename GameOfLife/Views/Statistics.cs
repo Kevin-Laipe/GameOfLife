@@ -9,25 +9,37 @@ namespace GameOfLife.Views
 {
     class Statistics : GroupBox
     {
-        //Attributs
-        private static string HEADER_TEXT = "Statistiques";
         private ViewModels.Statistics viewModel;
-        private StackPanel panel;
 
         public Statistics()
         {
-            viewModel = new ViewModels.Statistics();
-
             Init();
+        }
+
+        public void SetViewModel(ViewModels.Statistics viewModel)
+        {
+            this.viewModel = viewModel;
         }
 
         private void Init()
         {
-            this.Header = HEADER_TEXT;
+            StackPanel panel = new StackPanel();
 
-            panel = new StackPanel();
-            panel.Orientation = Orientation.Vertical;
+            CreateLabel(panel, "Iterations", "Iterations");
+            CreateLabel(panel, "Population", "Population");
+            CreateLabel(panel, "Greatest Population", "GreatestPopulation");
+            CreateLabel(panel, "Smallest Population", "SmallestPopulation");
+            CreateLabel(panel, "Oldest Cell", "OldestCell");
+
             this.AddChild(panel);
+        }
+
+        private void CreateLabel(StackPanel panel, string labelName, string propertyName)
+        {
+            Label label = new Label();
+            label.Content = labelName + " : {Binding " + propertyName + "}";
+
+            panel.Children.Add(label);
         }
     }
 }

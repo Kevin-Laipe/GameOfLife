@@ -29,7 +29,7 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-
+                        
                         <Label Grid.Row="0" Grid.Column="0">Largeur :</Label>
                         <views:NumberPicker x:Name="numberWidth" Grid.Row="0" Grid.Column="1" Value="10" Minimum="1" Maximum="50"/>
                         <Label Grid.Row="1" Grid.Column="0">Hauteur:</Label>
@@ -43,15 +43,7 @@
                         <Label x:Name="labelSpeed">1 secondes</Label>
                     </StackPanel>
                 </GroupBox>
-                <GroupBox Header="Statistiques">
-                    <StackPanel>
-                        <Label x:Name="labelIterations"/>
-                        <Label x:Name="labelPopulation"/>
-                        <Label x:Name="labelMinPopulation"/>
-                        <Label x:Name="labelMaxPopulation"/>
-                        <Label x:Name="labelOldest"/>
-                    </StackPanel>
-                </GroupBox>
+                <views:Statistics />
                 <Button x:Name="buttonStart" Click="buttonStart_Clicked">Start</Button>
                 <Button x:Name="buttonStop" Click="buttonStop_Clicked">Stop</Button>
                 <Button x:Name="buttonReset" Click="buttonReset_Clicked">Reset</Button>

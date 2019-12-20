@@ -2,23 +2,23 @@
 using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Media;
+using System.ComponentModel;
 
 namespace GameOfLife.Views
 {
     class Grid : System.Windows.Controls.Grid
     {
-        //Attributs
+        /*===============================*\
+        |*           Attributs           *|
+        \*===============================*/
         private ViewModels.Grid viewModel;
         private Cell[,] cells;
 
-        /// <summary>
-        /// Constructeur de la classe Grid (View)
-        /// </summary>
-        /// <param name="model">Modèle de la grille</param>
-        public Grid() : this(10, 10)
-        {
+        /*===============================*\
+        |*         Constructeurs         *|
+        \*===============================*/
 
-        }
+        public Grid() : this(10, 10) { }
 
         public Grid(int width, int height)
         {
@@ -26,13 +26,16 @@ namespace GameOfLife.Views
             cells = new Cell[viewModel.Width, viewModel.Height];
 
             Init();
+            RegisterEvents();
+
             this.VerticalAlignment = VerticalAlignment.Center;
             this.HorizontalAlignment = HorizontalAlignment.Center;
         }
 
-        /// <summary>
-        /// Initialisation de la grille
-        /// </summary>
+        /*===============================*\
+        |*       Méthodes privées        *|
+        \*===============================*/
+
         private void Init()
         {
             for(int x = 0; x < viewModel.Width; x++)
@@ -49,8 +52,7 @@ namespace GameOfLife.Views
             {
                 for(int x = 0; x < viewModel.Width; x++)
                 {
-                    //Création des cellules et ajout à la grille
-                    Cell newCell = new Cell(viewModel[x, y]);
+                    Cell newCell = new Cell(ViewModel[x, y]);
                     cells[x, y] = newCell;
                     this.Children.Add(newCell);
                     Grid.SetColumn(newCell, x);
@@ -59,23 +61,15 @@ namespace GameOfLife.Views
             }
         }
 
-        /// <summary>
-        /// Met à jour les couleurs des cellules
-        /// </summary>
-        public void Refresh()
+        private void RegisterEvents()
         {
-            foreach(Cell cell in cells)
-            {
-                cell.Background = cell.ViewModel.GetColor();
-            }
+            viewModel.PropertyChanged += new PropertyChangedEventHandler(OnPropertyChanged);
         }
 
-        /// <summary>
-        /// Modifie le nombre de lignes et de colonnes de la grille
-        /// </summary>
-        /// <param name="rows">Nombre de lignes</param>
-        /// <param name="columns">Nombre de colonnes</param>
-        /// <returns>Grille redimensionnée</returns>
+        /*===============================*\
+        |*      Méthodes publiques       *|
+        \*===============================*/
+
         public Grid Resize(int rows, int columns)
         {
             Grid newGrid = new Grid(rows, columns);
@@ -92,11 +86,6 @@ namespace GameOfLife.Views
             return newGrid;
         }
 
-        /// <summary>
-        /// Redimensionne (pixel) la taille de la grille.
-        /// </summary>
-        /// <param name="width">Lageur de la grille (pixel)</param>
-        /// <param name="height">Hauteur de la grille (pixel)</param>
         public void ChangeSize(double width, double height)
         {
             double horizontal_size = width / viewModel.Width;
@@ -108,23 +97,30 @@ namespace GameOfLife.Views
             this.Height = size * viewModel.Height;
         }
 
-        /// <summary>
-        /// Cellule de la grille
-        /// </summary>
-        /// <param name="x">Colonne de la cellule</param>
-        /// <param name="y">Ligne de la cellule</param>
-        /// <returns></returns>
+        /*===============================*\
+        |*           Accesseurs          *|
+        \*===============================*/
+
         private Cell this[int x, int y]
         {
             get { return cells[x, y]; }
         }
 
-        /// <summary>
-        /// Modèle représentant la grille
-        /// </summary>
         public ViewModels.Grid ViewModel
         {
             get { return viewModel; }
+        }
+
+        /*===============================*\
+        |*            Events             *|
+        \*===============================*/
+
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
+        {
+            if(args.PropertyName == "Cell")
+            {
+                
+            }
         }
     }
 }

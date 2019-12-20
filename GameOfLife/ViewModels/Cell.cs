@@ -11,13 +11,23 @@ namespace GameOfLife.ViewModels
 {
     class Cell : INotifyPropertyChanged
     {
-        //Attributs
+        /*===============================*\
+        |*           Attributs           *|
+        \*===============================*/
         Models.Cell model;
+
+        /*===============================*\
+        |*        Constructeurs          *|
+        \*===============================*/
 
         public Cell(Models.Cell model)
         {
             this.model = model;
         }
+
+        /*===============================*\
+        |*      Méthodes publiques       *|
+        \*===============================*/
 
         public Brush GetColor()
         {
@@ -32,14 +42,22 @@ namespace GameOfLife.ViewModels
             }
         }
 
+        /*===============================*\
+        |*           Accesseurs          *|
+        \*===============================*/
+        private CellState nextState;
+
         public void Prepare(CellState nextState)
         {
-            model.Prepare(nextState);
+            this.nextState = nextState;   
         }
 
         public void Apply()
         {
-            model.Apply();
+            if(nextState != null)
+            {
+                this.State = nextState;
+            }
         }
 
         public CellState State
@@ -57,8 +75,12 @@ namespace GameOfLife.ViewModels
             get { return model.Age; }
         }
 
-        //Events
+        /*===============================*\
+        |*            Events             *|
+        \*===============================*/
+
         public event PropertyChangedEventHandler PropertyChanged;
+
         private void RaisePropertyChanged(String propertyName)
         {
             PropertyChangedEventHandler handler = PropertyChanged;

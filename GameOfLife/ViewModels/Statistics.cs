@@ -9,67 +9,65 @@ namespace GameOfLife.ViewModels
 {
     class Statistics : INotifyPropertyChanged
     {
-        //Attributs
         private Models.Statistics model;
-
-        //Events
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public Statistics()
         {
-            model = new Models.Statistics();
+            this.model = new Models.Statistics();
         }
 
         public int Iterations
         {
-            get { return model.iterations; }
+            get { return model.Iterations; }
             set
             {
-                model.iterations = value;
+                model.Iterations = value;
                 RaisePropertyChanged("Iterations");
             }
         }
 
         public int Population
         {
-            get { return model.population; }
+            get { return model.Population; }
             set
             {
-                model.population = value;
+                model.Population = value;
                 RaisePropertyChanged("Population");
             }
         }
 
         public int GreatestPopulation
         {
-            get { return model.greatestPopulation; }
+            get { return model.GreatestPopulation; }
             set
             {
-                model.greatestPopulation = value;
+                model.GreatestPopulation = value;
                 RaisePropertyChanged("GreatestPopulation");
             }
         }
 
         public int SmallestPopulation
         {
-            get { return model.smallestPopulation; }
+            get { return model.SmallestPopulation; }
             set
             {
-                model.smallestPopulation = value;
+                model.SmallestPopulation = value;
                 RaisePropertyChanged("SmallestPopulation");
             }
         }
 
         public int OldestCell
         {
-            get { return model.oldestCell; }
+            get { return model.OldestCell; }
             set
             {
-                model.oldestCell = value;
+                model.OldestCell = value;
                 RaisePropertyChanged("OldestCell");
             }
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+        
         private void RaisePropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
@@ -78,6 +76,5 @@ namespace GameOfLife.ViewModels
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
     }
 }

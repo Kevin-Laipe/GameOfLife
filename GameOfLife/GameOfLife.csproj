@@ -60,10 +60,10 @@
     <Compile Include="Models\Statistics.cs" />
     <Compile Include="ViewModels\Cell.cs" />
     <Compile Include="ViewModels\Grid.cs" />
-    <Compile Include="ViewModels\Statistics.cs" />
     <Compile Include="Views\Cell.cs" />
     <Compile Include="Views\Grid.cs" />
     <Compile Include="Views\NumberPicker.cs" />
+    <Compile Include="ViewModels\Statistics.cs" />
     <Compile Include="Views\Statistics.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

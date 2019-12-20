@@ -26,8 +26,6 @@ namespace GameOfLife
             numberHeight.SetValue(10);
 
             view = grid;
-
-            DisplayStatistics();
         }
 
         /// <summary>
@@ -58,8 +56,6 @@ namespace GameOfLife
         private void buttonReset_Clicked(object sender, RoutedEventArgs e)
         {
             view.ViewModel.Clear();
-            view.Refresh();
-            DisplayStatistics();
         }
 
         /// <summary>
@@ -70,8 +66,6 @@ namespace GameOfLife
         private void buttonRandomize_Click(object sender, RoutedEventArgs e)
         {
             view.ViewModel.Randomize();
-            view.Refresh();
-            DisplayStatistics();
         }
 
         /// <summary>
@@ -114,9 +108,7 @@ namespace GameOfLife
             {
                 SetGrid(view.Resize(width, height));
                 view.ChangeSize(panelGrid.ActualWidth, panelGrid.ActualHeight);
-                view.Refresh();
             }
-            DisplayStatistics();
         }
 
         /// <summary>
@@ -127,8 +119,6 @@ namespace GameOfLife
         private void Timer_Tick(Object sender, EventArgs args)
         {
             GameOfLifeAlgorithm.Update(view.ViewModel);
-            view.Refresh();
-            DisplayStatistics();
         }
 
         /// <summary>
@@ -140,20 +130,6 @@ namespace GameOfLife
             view = newGrid;
             panelGrid.Children.Clear();   
             panelGrid.Children.Add(newGrid);
-        }
-
-        /// <summary>
-        /// Affiche les statistiques sur l'interface
-        /// </summary>
-        private void DisplayStatistics()
-        {
-            Statistics statistics = view.ViewModel.Statistics;
-
-            labelIterations.Content = "Itérations : " + statistics.iterations;
-            labelPopulation.Content = "Population actuelle : " + statistics.population;
-            labelMaxPopulation.Content = "Population max : " + statistics.greatestPopulation;
-            labelMinPopulation.Content = "Population min : " + statistics.smallestPopulation;
-            labelOldest.Content = "Age maximal : " + statistics.oldestCell;
         }
     }
 }
