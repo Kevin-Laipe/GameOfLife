@@ -13,7 +13,6 @@ namespace GameOfLife.Models
         |*           Attributs           *|
         \*===============================*/
         private CellState state;
-        private CellState nextState;
         private int age;
 
         /*===============================*\
@@ -23,7 +22,6 @@ namespace GameOfLife.Models
         public Cell()
         {
             state = CellState.Dead;
-            nextState = CellState.Dead;
             age = 0;
         }
 

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GameOfLife"
+        xmlns:local="clr-namespace:GameOfLife.ViewModels"
         xmlns:views="clr-namespace:GameOfLife.Views"
         mc:Ignorable="d"
         Title="Game Of Life" Height="450" Width="800">
@@ -18,7 +18,7 @@
 
         <StackPanel Grid.Row="0" Grid.Column="0">
             <StackPanel HorizontalAlignment="Center">
-                <GroupBox Header="Taille" Width="159">
+                <GroupBox Header="Taille">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -43,7 +43,30 @@
                         <Label x:Name="labelSpeed">1 secondes</Label>
                     </StackPanel>
                 </GroupBox>
-                <views:Statistics />
+                <GroupBox Header="Statistiques">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label>Iterations :</Label>
+                            <Label Content="{Binding Iterations, Mode=TwoWay}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label>Population:</Label>
+                            <Label Content="{Binding Population, Mode=OneWay}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label>Population Max :</Label>
+                            <Label Content="{Binding GreatestPopulation, Mode=OneWay}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label>Population Min :</Label>
+                            <Label Content="{Binding SmallestPopulation, Mode=OneWay}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label>Plus vielle cellule :</Label>
+                            <Label Content="{Binding OldestCell, Mode=OneWay}" />
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
                 <Button x:Name="buttonStart" Click="buttonStart_Clicked">Start</Button>
                 <Button x:Name="buttonStop" Click="buttonStop_Clicked">Stop</Button>
                 <Button x:Name="buttonReset" Click="buttonReset_Clicked">Reset</Button>

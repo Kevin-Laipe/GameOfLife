@@ -73,6 +73,7 @@ namespace GameOfLife.Views
         public Grid Resize(int rows, int columns)
         {
             Grid newGrid = new Grid(rows, columns);
+            newGrid.Statistics = this.Statistics;
 
             for(int y = 0; y < viewModel.Height; y++)
             {
@@ -109,6 +110,12 @@ namespace GameOfLife.Views
         public ViewModels.Grid ViewModel
         {
             get { return viewModel; }
+        }
+
+        public ViewModels.Statistics Statistics
+        {
+            get { return viewModel.Statistics; }
+            set { viewModel.Statistics = value; }
         }
 
         /*===============================*\

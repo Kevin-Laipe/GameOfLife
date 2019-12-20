@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameOfLife.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -34,18 +35,29 @@ namespace GameOfLife.ViewModels
         }
 
         /*===============================*\
-        |*          Accesseurs           *|
+        |*       Méthodes publiques      *|
         \*===============================*/
 
         public void Randomize()
         {
-            model.Randomize();
+            Random random = new Random(DateTime.Now.Millisecond);
+            foreach(Cell cell in cells)
+            {
+                cell.State = (CellState)random.Next(0, 2);
+            }
         }
 
         public void Clear()
         {
-            model.Clear();
+            foreach(Cell cell in cells)
+            {
+                cell.State = CellState.Dead;
+            }
         }
+
+        /*===============================*\
+        |*          Accesseurs           *|
+        \*===============================*/
 
         public Cell this[int x, int y]
         {
@@ -65,6 +77,12 @@ namespace GameOfLife.ViewModels
         public int Height
         {
             get { return model.Height; }
+        }
+
+        public ViewModels.Statistics Statistics
+        {
+            get { return model.Statistics; }
+            set { model.Statistics = value; }
         }
 
         /*===============================*\

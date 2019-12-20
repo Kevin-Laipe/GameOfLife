@@ -26,6 +26,8 @@ namespace GameOfLife
             numberHeight.SetValue(10);
 
             view = grid;
+            this.DataContext = view.Statistics;
+            ToggleStartButtons();
         }
 
         /// <summary>
@@ -36,6 +38,8 @@ namespace GameOfLife
         private void buttonStart_Clicked(object sender, RoutedEventArgs args)
         {
             timer.Start();
+            TogglePauseButtons();
+
         }
 
         /// <summary>
@@ -46,6 +50,7 @@ namespace GameOfLife
         private void buttonStop_Clicked(object sender, RoutedEventArgs args)
         {
             timer.Stop();
+            ToggleStartButtons();
         }
 
         /// <summary>
@@ -130,6 +135,18 @@ namespace GameOfLife
             view = newGrid;
             panelGrid.Children.Clear();   
             panelGrid.Children.Add(newGrid);
+        }
+
+        private void ToggleStartButtons(bool yes = true)
+        {
+            buttonStop.IsEnabled = !(yes);
+            buttonSize.IsEnabled = yes;
+            buttonStart.IsEnabled = yes;
+        }
+
+        private void TogglePauseButtons()
+        {
+            ToggleStartButtons(false);
         }
     }
 }

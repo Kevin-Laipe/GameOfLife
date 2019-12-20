@@ -64,7 +64,6 @@
     <Compile Include="Views\Grid.cs" />
     <Compile Include="Views\NumberPicker.cs" />
     <Compile Include="ViewModels\Statistics.cs" />
-    <Compile Include="Views\Statistics.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

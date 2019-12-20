@@ -14,6 +14,7 @@ namespace GameOfLife.Models
         \*===============================*/
         private Cell[,] cells;
         private int height, width;
+        private ViewModels.Statistics statistics;
 
         /*===============================*\
         |*         Constructeurs         *|
@@ -24,28 +25,8 @@ namespace GameOfLife.Models
             this.width = width;
             this.height = height;
 
+            statistics = new ViewModels.Statistics();
             this.InitCells(width, height);
-        }
-
-        /*===============================*\
-        |*      Méthodes publiques       *|
-        \*===============================*/
-
-        public void Randomize()
-        {
-            Random random = new Random();
-            foreach (Cell cell in cells)
-            {
-                cell.State = (CellState)random.Next(0, 2);
-            }
-        }
-
-        public void Clear()
-        {
-            foreach(Cell cell in cells)
-            {
-                cell.State = CellState.Dead;
-            }
         }
 
         /*===============================*\
@@ -84,6 +65,12 @@ namespace GameOfLife.Models
         {
             get { return height; }
             set { height = value; }
+        }
+
+        public ViewModels.Statistics Statistics
+        {
+            get { return statistics; }
+            set { statistics = value; }
         }
     }
 }

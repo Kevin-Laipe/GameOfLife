@@ -14,6 +14,15 @@ namespace GameOfLife.Models
         private int smallestPopulation;
         private int oldestCell;
 
+        public Statistics()
+        {
+            iterations = 0;
+            population = 0;
+            greatestPopulation = 0;
+            smallestPopulation = 0;
+            oldestCell = 0;
+        }
+
         public int Iterations
         {
             get { return iterations; }

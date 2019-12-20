@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace GameOfLife.Views
 {
@@ -63,16 +64,6 @@ namespace GameOfLife.Views
             this.GotFocus += new RoutedEventHandler(OnGotFocus);
         }
 
-        private void OnGotFocus(object sender, RoutedEventArgs args)
-        {
-            this.SelectAll();
-        }
-
-        private void OnLostFocus(object sender, RoutedEventArgs args)
-        {
-            SetValue(Text);
-        }
-
         /*===============================*\
         |*           Accesseurs          *|
         \*===============================*/
@@ -96,6 +87,20 @@ namespace GameOfLife.Views
         {
             get { return Convert.ToString(maxValue); }
             set { maxValue = Convert.ToInt32(value); }
+        }
+
+        /*===============================*\
+        |*             Events            *|
+        \*===============================*/
+
+        private void OnGotFocus(object sender, RoutedEventArgs args)
+        {
+            this.SelectAll();
+        }
+
+        private void OnLostFocus(object sender, RoutedEventArgs args)
+        {
+            SetValue(Text);
         }
     }
 }
