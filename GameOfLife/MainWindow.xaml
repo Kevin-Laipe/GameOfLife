@@ -6,91 +6,89 @@
         xmlns:local="clr-namespace:GameOfLife.ViewModels"
         xmlns:views="clr-namespace:GameOfLife.Views"
         mc:Ignorable="d"
-        Title="Game Of Life" Height="500" Width="800">
+        Title="Game Of Life" Height="500" Width="800" Margin="5,0,0,0">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="170" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.Column="0">
-            <StackPanel HorizontalAlignment="Center">
-                <GroupBox Header="Taille">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        
-                        <Label Grid.Row="0" Grid.Column="0">Largeur :</Label>
-                        <views:NumberPicker x:Name="numberWidth" Grid.Row="0" Grid.Column="1" Value="10" Minimum="1" Maximum="50"/>
-                        <Label Grid.Row="1" Grid.Column="0">Hauteur:</Label>
-                        <views:NumberPicker x:Name="numberHeight" Grid.Row="1" Grid.Column="1" Value="10" Minimum="1" Maximum="50"/>
-                        <Button x:Name="buttonSize" Grid.Row="2" Grid.ColumnSpan="2" Click="buttonSize_Click">Valider</Button>
-                    </Grid>
-                </GroupBox>
-                
-                <GroupBox Header="Vitesse">
-                    <StackPanel>
-                        <Slider x:Name="sliderSpeed" ValueChanged="sliderSpeed_ValueChanged" Value="1" Width="100" Minimum="0.01" Maximum="10"/>
-                        <Label x:Name="labelSpeed">1 secondes</Label>
+        <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" Margin="10,10,0,10">
+            <GroupBox Header="Taille">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0">Largeur :</Label>
+                    <views:NumberPicker x:Name="numberWidth" Grid.Row="0" Grid.Column="1" Value="10" Minimum="1" Maximum="50"/>
+                    <Label Grid.Row="1" Grid.Column="0">Hauteur:</Label>
+                    <views:NumberPicker x:Name="numberHeight" Grid.Row="1" Grid.Column="1" Value="10" Minimum="1" Maximum="50"/>
+                    <Button x:Name="buttonSize" Grid.Row="2" Grid.ColumnSpan="2" Click="buttonSize_Click">Valider</Button>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Header="Vitesse">
+                <StackPanel>
+                    <Slider x:Name="sliderSpeed" ValueChanged="sliderSpeed_ValueChanged" Value="1" Width="100" Minimum="0.01" Maximum="10"/>
+                    <Label x:Name="labelSpeed">1 secondes</Label>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="Outil de dessin" x:Name="groupBoxShape">
+                <GroupBox.DataContext>
+                    <local:Pattern />
+                </GroupBox.DataContext>
+                <ComboBox x:Name="comboBoxPattern" ItemsSource="{Binding Patterns}" SelectedItem="{Binding SelectedPattern}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding Image}" Height="16" Width="16"></Image>
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </GroupBox>
+
+            <GroupBox Header="Statistics" x:Name="groupBoxStatistics">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Iterations :</Label>
+                        <Label Content="{Binding Iterations}" />
                     </StackPanel>
-                </GroupBox>
-
-                <GroupBox Header="Outil de dessin" x:Name="groupBoxShape">
-                    <GroupBox.DataContext>
-                        <local:Pattern />
-                    </GroupBox.DataContext>
-                    <ComboBox x:Name="comboBoxPattern" ItemsSource="{Binding Patterns}" SelectedItem="{Binding SelectedPattern}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="{Binding Image}" Height="16" Width="16"></Image>
-                                    <TextBlock Text="{Binding Name}"></TextBlock>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                </GroupBox>
-
-                <GroupBox Header="Statistics" x:Name="groupBoxStatistics">
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label>Iterations : </Label>
-                            <Label Content="{Binding Iterations}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label>Population :</Label>
-                            <Label Content="{Binding Population}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label>Population Max :</Label>
-                            <Label Content="{Binding GreatestPopulation}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label>Population Min :</Label>
-                            <Label Content="{Binding SmallestPopulation}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label>Age de la plus vielle cellule :</Label>
-                            <Label Content="{Binding OldestCell}" />
-                        </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Population :</Label>
+                        <Label Content="{Binding Population}" />
                     </StackPanel>
-                </GroupBox>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Population Max :</Label>
+                        <Label Content="{Binding GreatestPopulation}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Population Min :</Label>
+                        <Label Content="{Binding SmallestPopulation}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Plus Vielle Cellule:</Label>
+                        <Label Content="{Binding OldestCell}" />
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
 
-                <Button x:Name="buttonStart" Click="buttonStart_Clicked">Start</Button>
-                <Button x:Name="buttonStop" Click="buttonStop_Clicked">Stop</Button>
-                <Button x:Name="buttonReset" Click="buttonReset_Clicked">Reset</Button>
-                <Button x:Name="buttonRandomize" Click="buttonRandomize_Click">Randomize</Button>
-            </StackPanel>
+            <Button x:Name="buttonStart" Click="buttonStart_Clicked">Start</Button>
+            <Button x:Name="buttonStop" Click="buttonStop_Clicked">Stop</Button>
+            <Button x:Name="buttonReset" Click="buttonReset_Clicked">Reset</Button>
+            <Button x:Name="buttonRandomize" Click="buttonRandomize_Click">Randomize</Button>
         </StackPanel>
         <DockPanel x:Name="panelGrid" SizeChanged="panelGrid_SizeChanged" Grid.Row="0" Grid.Column="1" Margin="10,10,10,10">
             <views:Grid x:Name="grid" />

@@ -41,7 +41,7 @@ namespace GameOfLife.Views
 
         private void RegisterEvents()
         {
-            this.Click += new RoutedEventHandler(OnMouseClick);
+            this.MouseRightButtonDown += new MouseButtonEventHandler(OnRightClick);
             viewModel.PropertyChanged += new PropertyChangedEventHandler(OnPropertyChanged);
         }
 
@@ -58,9 +58,9 @@ namespace GameOfLife.Views
         |*             Events            *|
         \*===============================*/
 
-        private void OnMouseClick(Object sender, RoutedEventArgs args)
+        private void OnRightClick(Object sender, MouseButtonEventArgs args)
         {
-            //viewModel.State = (CellState)((int)(viewModel.State + 1) % 2);
+            this.ViewModel.State = CellState.Dead;
         }
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
