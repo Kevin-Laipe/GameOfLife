@@ -9,22 +9,32 @@ using System.Threading.Tasks;
 
 namespace GameOfLife.ViewModels
 {
+    /// <summary>
+    /// Vue-Modèle d'un pattern de Game Of Life
+    /// </summary>
     class Pattern : INotifyPropertyChanged
     {
+        /*===============================*\
+        |*           Attributs           *|
+        \*===============================*/
         private ObservableCollection<Models.Pattern> patterns;
         private Models.Pattern selectedPattern;
 
-        public Pattern()
-        {
-            patterns = new ObservableCollection<Models.Pattern>(PatternCollection.All);
-            selectedPattern = PatternCollection.Cell;
-        }
+        /*===============================*\
+        |*           Accesseurs          *|
+        \*===============================*/
 
+        /// <summary>
+        /// Collection de pattern
+        /// </summary>
         public ObservableCollection<Models.Pattern> Patterns
         {
             get { return patterns; }
         }
 
+        /// <summary>
+        /// Pattern séléctioné
+        /// </summary>
         public Models.Pattern SelectedPattern
         {
             get { return selectedPattern; }
@@ -35,8 +45,16 @@ namespace GameOfLife.ViewModels
             }
         }
 
+        /*===============================*\
+        |*             Events            *|
+        \*===============================*/
+
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Lève l'event PropertyChanged d'une propriété
+        /// </summary>
+        /// <param name="propertyName">Nom de la propriété</param>
         private void RaisePropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = PropertyChanged;

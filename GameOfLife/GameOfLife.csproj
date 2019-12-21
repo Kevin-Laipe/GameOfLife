@@ -79,6 +79,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="StringResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Cell.cs" />
@@ -109,11 +113,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\glider.PNG" />
-    <Resource Include="images\lwSpaceship.PNG" />
+    <Resource Include="Images\glider.PNG" />
+    <Resource Include="Images\lwSpaceship.PNG" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\cellule.PNG" />
+    <Resource Include="Images\cellule.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

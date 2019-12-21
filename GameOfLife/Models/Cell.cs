@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace GameOfLife.Models
 {
+    /// <summary>
+    /// Modèle d'une cellule de Game Of Life
+    /// </summary>
     class Cell
     {
         /*===============================*\
@@ -21,6 +24,8 @@ namespace GameOfLife.Models
         |*        Constructeurs          *|
         \*===============================*/
 
+        public Cell() : this(0, 0) { }
+
         public Cell(int x, int y)
         {
             state = CellState.Dead;
@@ -33,24 +38,36 @@ namespace GameOfLife.Models
         |*          Accesseurs           *|
         \*===============================*/
 
+        /// <summary>
+        /// Etat de la cellule
+        /// </summary>
         public CellState State
         {
             get { return state; }
             set { state = value; }
         }
 
+        /// <summary>
+        /// Age de la cellule
+        /// </summary>
         public int Age
         {
             get { return age; }
             set { age = value; }
         }
 
+        /// <summary>
+        /// Position x de la cellule
+        /// </summary>
         public int X
         {
             get { return x; }
             set { x = value; }
         }
 
+        /// <summary>
+        /// Positition y de la cellule
+        /// </summary>
         public int Y
         {
             get { return y; }

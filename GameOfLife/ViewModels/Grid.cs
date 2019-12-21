@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace GameOfLife.ViewModels
 {
+    /// <summary>
+    /// Vue-Modèle d'une grille de Game Of Life
+    /// </summary>
     class Grid : INotifyPropertyChanged
     {
         /*===============================*\
@@ -20,6 +23,11 @@ namespace GameOfLife.ViewModels
         |*         Constructeurs         *|
         \*===============================*/
 
+        /// <summary>
+        /// Constructeur complet
+        /// </summary>
+        /// <param name="width">Largeur (nombre de colonnes)</param>
+        /// <param name="height">Hauteur (nombre de lignes)</param>
         public Grid(int width, int height)
         {
             this.model = new Models.Grid(width, height);
@@ -38,6 +46,9 @@ namespace GameOfLife.ViewModels
         |*       Méthodes publiques      *|
         \*===============================*/
 
+        /// <summary>
+        /// Rempli la grille d'états aléatoires
+        /// </summary>
         public void Randomize()
         {
             Clear(); //Nécéssaire pour que les statistiques soient corrects
@@ -49,6 +60,9 @@ namespace GameOfLife.ViewModels
             }
         }
 
+        /// <summary>
+        /// Met l'état de toutes les cellules de la grille à "mort"
+        /// </summary>
         public void Clear()
         {
             foreach(Cell cell in cells)
@@ -63,6 +77,12 @@ namespace GameOfLife.ViewModels
         |*          Accesseurs           *|
         \*===============================*/
 
+        /// <summary>
+        /// Cellule de la grille
+        /// </summary>
+        /// <param name="x">Coordonée X de la cellule</param>
+        /// <param name="y">Coordonée Y de la cellule</param>
+        /// <returns></returns>
         public Cell this[int x, int y]
         {
             get { return cells[x, y]; }
@@ -73,16 +93,25 @@ namespace GameOfLife.ViewModels
             }
         }
 
+        /// <summary>
+        /// Largeur (nombre de colonnes)
+        /// </summary>
         public int Width
         {
             get { return model.Width; }
         }
 
+        /// <summary>
+        /// Hauter (nombre de lignes)
+        /// </summary>
         public int Height
         {
             get { return model.Height; }
         }
 
+        /// <summary>
+        /// Statistiques liées à la grille
+        /// </summary>
         public ViewModels.Statistics Statistics
         {
             get { return model.Statistics; }
@@ -94,6 +123,10 @@ namespace GameOfLife.ViewModels
         \*===============================*/
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Lève l'event PropertyChanger d'un attribut
+        /// </summary>
+        /// <param name="propertyName">Nom de l'attribut</param>
         private void RaisePropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = PropertyChanged;

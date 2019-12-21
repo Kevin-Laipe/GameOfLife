@@ -5,6 +5,9 @@ using System.Windows.Input;
 
 namespace GameOfLife.Views
 {
+    /// <summary>
+    /// Element permettant la saisie d'un nombre entier
+    /// </summary>
     class NumberPicker : TextBox
     {
         /*===============================*\
@@ -17,6 +20,10 @@ namespace GameOfLife.Views
         /*===============================*\
         |*         Constructeurs         *|
         \*===============================*/
+
+        /// <summary>
+        /// Constructeur par défaut
+        /// </summary>
         public NumberPicker()
         {
             RegisterEvents();
@@ -31,6 +38,11 @@ namespace GameOfLife.Views
         /*===============================*\
         |*       Méthodes publiques      *|
         \*===============================*/
+
+        /// <summary>
+        /// Modifie la valeur actuelle
+        /// </summary>
+        /// <param name="newValue">Nouvelle valeur</param>
         public void SetValue(string newValue)
         {
             try
@@ -43,6 +55,10 @@ namespace GameOfLife.Views
             }
         }
 
+        /// <summary>
+        /// Modifie la valeur actuelle
+        /// </summary>
+        /// <param name="newValue">Nouvelle valeur</param>
         public void SetValue(int newValue)
         {
             if (newValue < minValue)
@@ -54,10 +70,22 @@ namespace GameOfLife.Views
             Text = Convert.ToString(value);
         }
 
+        /// <summary>
+        /// Retourne la valeur actuelle
+        /// </summary>
+        /// <returns></returns>
+        public int GetValue()
+        {
+            return value;
+        }
+
         /*===============================*\
         |*       Méthodes privées        *|
         \*===============================*/
 
+        /// <summary>
+        /// Enregistre les événements de cette élément
+        /// </summary>
         private void RegisterEvents()
         {
             this.LostFocus += new RoutedEventHandler(OnLostFocus);
@@ -77,12 +105,18 @@ namespace GameOfLife.Views
             set { SetValue(value); }
         }
 
+        /// <summary>
+        /// Valeur minimal possible
+        /// </summary>
         public string Minimum
         {
             get { return Convert.ToString(minValue); }
             set { minValue = Convert.ToInt32(value); }
         }
 
+        /// <summary>
+        /// Valeur maximale possible
+        /// </summary>
         public string Maximum
         {
             get { return Convert.ToString(maxValue); }
@@ -93,11 +127,21 @@ namespace GameOfLife.Views
         |*             Events            *|
         \*===============================*/
 
+        /// <summary>
+        /// Méthode appelée lorsque l'élément a la focus
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void OnGotFocus(object sender, RoutedEventArgs args)
         {
             this.SelectAll();
         }
 
+        /// <summary>
+        /// Méthode appelée lorsque l'élément perd le focus
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void OnLostFocus(object sender, RoutedEventArgs args)
         {
             SetValue(Text);

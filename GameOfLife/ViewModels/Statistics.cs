@@ -8,15 +8,35 @@ using System.Windows.Input;
 
 namespace GameOfLife.ViewModels
 {
+    /// <summary>
+    /// Vue-Modèle des statistiques de Game Of Life
+    /// </summary>
     class Statistics : INotifyPropertyChanged
     {
+        /*===============================*\
+        |*           Attributs           *|
+        \*===============================*/
         private Models.Statistics model;
 
+        /*===============================*\
+        |*         Constructeurs         *|
+        \*===============================*/
+
+        /// <summary>
+        /// Constructeur par défaut
+        /// </summary>
         public Statistics()
         {
             this.model = new Models.Statistics();
         }
 
+        /*===============================*\
+        |*       Méthodes Publiques      *|
+        \*===============================*/
+
+        /// <summary>
+        /// Met toutes les statistiques à zéro
+        /// </summary>
         public void Reset()
         {
             Iterations = 0;
@@ -26,6 +46,9 @@ namespace GameOfLife.ViewModels
             OldestCell = 0;
         }
 
+        /// <summary>
+        /// Nombre d'itérations
+        /// </summary>
         public int Iterations
         {
             get { return model.Iterations; }
@@ -36,6 +59,9 @@ namespace GameOfLife.ViewModels
             }
         }
 
+        /// <summary>
+        /// Population actuelle
+        /// </summary>
         public int Population
         {
             get { return model.Population; }
@@ -56,6 +82,9 @@ namespace GameOfLife.ViewModels
             }
         }
 
+        /// <summary>
+        /// Population maximale
+        /// </summary>
         public int GreatestPopulation
         {
             get { return model.GreatestPopulation; }
@@ -66,6 +95,9 @@ namespace GameOfLife.ViewModels
             }
         }
 
+        /// <summary>
+        /// Population minimale
+        /// </summary>
         public int SmallestPopulation
         {
             get { return model.SmallestPopulation; }
@@ -76,6 +108,9 @@ namespace GameOfLife.ViewModels
             }
         }
 
+        /// <summary>
+        /// Age de la plus vielle cellule
+        /// </summary>
         public int OldestCell
         {
             get { return model.OldestCell; }
@@ -86,8 +121,16 @@ namespace GameOfLife.ViewModels
             }
         }
 
+        /*===============================*\
+        |*            Events             *|
+        \*===============================*/
+
         public event PropertyChangedEventHandler PropertyChanged;
         
+        /// <summary>
+        /// Lève l'event PropertyChanged d'une propriété
+        /// </summary>
+        /// <param name="propertyName">Nom de la propiété</param>
         private void RaisePropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = PropertyChanged;

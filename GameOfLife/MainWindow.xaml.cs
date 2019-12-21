@@ -1,6 +1,7 @@
 ﻿using GameOfLife.Models;
 using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
@@ -25,11 +26,11 @@ namespace GameOfLife
 
             numberWidth.SetValue(10);
             numberHeight.SetValue(10);
+            labelSpeed.Content = "1 " + this.FindResource("seconds");
 
             view = grid;
             groupBoxStatistics.DataContext = view.Statistics;
             grid.SetPatterns(groupBoxShape.DataContext as ViewModels.Pattern);
-            ToggleStartButtons();
         }
 
         /// <summary>
@@ -98,7 +99,7 @@ namespace GameOfLife
             {
                 double newSpeed = e.NewValue;
                 timer.Interval = TimeSpan.FromSeconds(newSpeed);
-                labelSpeed.Content = Math.Round(newSpeed, 2) + " secondes";
+                labelSpeed.Content = Math.Round(newSpeed, 2) + " " + this.FindResource("seconds");
             }
         }
 
@@ -110,8 +111,8 @@ namespace GameOfLife
         private void buttonSize_Click(object sender, RoutedEventArgs args)
         {
             ViewModels.Grid viewModel = view.ViewModel;
-            int width = Convert.ToInt32(numberWidth.Value);
-            int height = Convert.ToInt32(numberHeight.Value);
+            int width = numberWidth.GetValue();
+            int height = numberHeight.GetValue();
 
             if (viewModel.Width != width || viewModel.Height != height)
             {

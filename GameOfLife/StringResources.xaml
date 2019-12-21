@@ -1,0 +1,31 @@
+﻿<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <system:String x:Key="size">Taille</system:String>
+    <system:String x:Key="width">Longueur :</system:String>
+    <system:String x:Key="height">Largeur :</system:String>
+    <system:String x:Key="apply">Valider</system:String>
+
+    <system:String x:Key="speed">Vitesse</system:String>
+    <system:String x:Key="seconds">secondes</system:String>
+
+    <system:String x:Key="patterns">Outils de dessin</system:String>
+    <system:String x:Key="cell">Cellule</system:String>
+    <system:String x:Key="glider">Glider</system:String>
+    <system:String x:Key="lightweightSpaceship">Lightweight Spaceship</system:String>
+
+    <system:String x:Key="statistics">Statistiques</system:String>
+    <system:String x:Key="iterations">Iterations :</system:String>
+    <system:String x:Key="population">Population :</system:String>
+    <system:String x:Key="greatestPopulation">Population Max :</system:String>
+    <system:String x:Key="smallestPopulation">Population Min :</system:String>
+    <system:String x:Key="oldestCell">Age Plus Vielle Cellule :</system:String>
+
+    <system:String x:Key="start">Démarrer</system:String>
+    <system:String x:Key="pause">Pause</system:String>
+    <system:String x:Key="reset">Réinitialiser</system:String>
+    <system:String x:Key="randomize">Aléatoire</system:String>
+    
+</ResourceDictionary>

@@ -9,17 +9,30 @@ using System.Windows.Media;
 
 namespace GameOfLife.ViewModels
 {
+    /// <summary>
+    /// Vue-Modèle d'une cellule de Game Of Life
+    /// </summary>
     class Cell : INotifyPropertyChanged
     {
         /*===============================*\
         |*           Attributs           *|
         \*===============================*/
         Models.Cell model;
+        private CellState nextState;
 
         /*===============================*\
         |*        Constructeurs          *|
         \*===============================*/
 
+        /// <summary>
+        /// Constructeur par défaut
+        /// </summary>
+        public Cell() : this(new Models.Cell()) { }
+
+        /// <summary>
+        /// Constructeur complet
+        /// </summary>
+        /// <param name="model">Modèle de la cellule</param>
         public Cell(Models.Cell model)
         {
             this.model = model;
@@ -29,6 +42,10 @@ namespace GameOfLife.ViewModels
         |*      Méthodes publiques       *|
         \*===============================*/
 
+        /// <summary>
+        /// Retourne la couleur de la cellule en fonction de l'état
+        /// </summary>
+        /// <returns>Couleur de la cellule</returns>
         public Brush GetColor()
         {
             switch(model.State)
@@ -42,16 +59,18 @@ namespace GameOfLife.ViewModels
             }
         }
 
-        /*===============================*\
-        |*           Accesseurs          *|
-        \*===============================*/
-        private CellState nextState;
-
+        /// <summary>
+        /// Prépare (enregistre) le prochain état
+        /// </summary>
+        /// <param name="nextState">Prochain état</param>
         public void Prepare(CellState nextState)
         {
             this.nextState = nextState;   
         }
 
+        /// <summary>
+        /// Applique le prochain état
+        /// </summary>
         public void Apply()
         {
             this.State = nextState;
@@ -68,6 +87,13 @@ namespace GameOfLife.ViewModels
             }
         }
 
+        /*===============================*\
+        |*           Accesseurs          *|
+        \*===============================*/
+
+        /// <summary>
+        /// Etat de la cellule
+        /// </summary>
         public CellState State
         {
             get { return model.State; }
@@ -81,17 +107,26 @@ namespace GameOfLife.ViewModels
             }
         }
 
+        /// <summary>
+        /// Age de la cellule
+        /// </summary>
         public int Age
         {
             get { return model.Age; }
         }
 
+        /// <summary>
+        /// Position X de la cellule dans la grille
+        /// </summary>
         public int X
         {
             get { return model.X; }
             set { model.X = value; }
         }
 
+        /// <summary>
+        /// Position Y de la cellule dans la grille
+        /// </summary>
         public int Y
         {
             get { return model.Y; }
@@ -104,6 +139,10 @@ namespace GameOfLife.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Lève l'event PropertyChanged d'une proprité
+        /// </summary>
+        /// <param name="propertyName">Nom de la propriété</param>
         private void RaisePropertyChanged(String propertyName)
         {
             PropertyChangedEventHandler handler = PropertyChanged;

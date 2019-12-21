@@ -3,10 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GameOfLife.ViewModels"
+        xmlns:local="clr-namespace:GameOfLife"
+        xmlns:viewmodels="clr-namespace:GameOfLife.ViewModels"
         xmlns:views="clr-namespace:GameOfLife.Views"
         mc:Ignorable="d"
         Title="Game Of Life" Height="500" Width="800" Margin="5,0,0,0">
+    <Window.Resources>
+        <ResourceDictionary Source="StringResources.xaml" />
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="170" />
@@ -17,7 +21,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" Margin="10,10,0,10">
-            <GroupBox Header="Taille">
+            <GroupBox Header="{StaticResource size}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
@@ -29,24 +33,24 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
 
-                    <Label Grid.Row="0" Grid.Column="0">Largeur :</Label>
+                    <Label Grid.Row="0" Grid.Column="0" Content="{StaticResource width}" />
                     <views:NumberPicker x:Name="numberWidth" Grid.Row="0" Grid.Column="1" Value="10" Minimum="1" Maximum="50"/>
-                    <Label Grid.Row="1" Grid.Column="0">Hauteur:</Label>
+                    <Label Grid.Row="1" Grid.Column="0" Content="{StaticResource height}" />
                     <views:NumberPicker x:Name="numberHeight" Grid.Row="1" Grid.Column="1" Value="10" Minimum="1" Maximum="50"/>
-                    <Button x:Name="buttonSize" Grid.Row="2" Grid.ColumnSpan="2" Click="buttonSize_Click">Valider</Button>
+                    <Button x:Name="buttonSize" Grid.Row="2" Grid.ColumnSpan="2" Click="buttonSize_Click" Content="{StaticResource apply}" />
                 </Grid>
             </GroupBox>
 
-            <GroupBox Header="Vitesse">
+            <GroupBox Header="{StaticResource speed}">
                 <StackPanel>
                     <Slider x:Name="sliderSpeed" ValueChanged="sliderSpeed_ValueChanged" Value="1" Width="100" Minimum="0.01" Maximum="10"/>
-                    <Label x:Name="labelSpeed">1 secondes</Label>
+                    <Label x:Name="labelSpeed" />
                 </StackPanel>
             </GroupBox>
 
-            <GroupBox Header="Outil de dessin" x:Name="groupBoxShape">
+            <GroupBox Header="{StaticResource patterns}" x:Name="groupBoxShape">
                 <GroupBox.DataContext>
-                    <local:Pattern />
+                    <viewmodels:Pattern />
                 </GroupBox.DataContext>
                 <ComboBox x:Name="comboBoxPattern" ItemsSource="{Binding Patterns}" SelectedItem="{Binding SelectedPattern}">
                     <ComboBox.ItemTemplate>
@@ -60,35 +64,35 @@
                 </ComboBox>
             </GroupBox>
 
-            <GroupBox Header="Statistics" x:Name="groupBoxStatistics">
+            <GroupBox Header="{StaticResource statistics}" x:Name="groupBoxStatistics">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <Label>Iterations :</Label>
+                        <Label Content="{StaticResource iterations}"/>
                         <Label Content="{Binding Iterations}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <Label>Population :</Label>
+                        <Label Content="{StaticResource population}"/>
                         <Label Content="{Binding Population}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <Label>Population Max :</Label>
+                        <Label Content="{StaticResource greatestPopulation}" />
                         <Label Content="{Binding GreatestPopulation}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <Label>Population Min :</Label>
+                        <Label Content="{StaticResource smallestPopulation}" />
                         <Label Content="{Binding SmallestPopulation}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <Label>Plus Vielle Cellule:</Label>
+                        <Label Content="{StaticResource oldestCell}" />
                         <Label Content="{Binding OldestCell}" />
                     </StackPanel>
                 </StackPanel>
             </GroupBox>
 
-            <Button x:Name="buttonStart" Click="buttonStart_Clicked">Start</Button>
-            <Button x:Name="buttonStop" Click="buttonStop_Clicked">Stop</Button>
-            <Button x:Name="buttonReset" Click="buttonReset_Clicked">Reset</Button>
-            <Button x:Name="buttonRandomize" Click="buttonRandomize_Click">Randomize</Button>
+            <Button x:Name="buttonStart" Click="buttonStart_Clicked" Content="{StaticResource start}" />
+            <Button x:Name="buttonStop" Click="buttonStop_Clicked" Content="{StaticResource pause}" IsEnabled="False"/>
+            <Button x:Name="buttonReset" Click="buttonReset_Clicked" Content="{StaticResource reset}" />
+            <Button x:Name="buttonRandomize" Click="buttonRandomize_Click" Content="{StaticResource randomize}" />
         </StackPanel>
         <DockPanel x:Name="panelGrid" SizeChanged="panelGrid_SizeChanged" Grid.Row="0" Grid.Column="1" Margin="10,10,10,10">
             <views:Grid x:Name="grid" />
