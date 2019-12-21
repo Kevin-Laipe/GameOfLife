@@ -12,10 +12,15 @@ namespace GameOfLife
     /// </summary>
     public partial class MainWindow : Window
     {
-        //Attributs
+        /*===============================*\
+        |*           Attributs           *|
+        \*===============================*/
         DispatcherTimer timer;
         Views.Grid view;
 
+        /*===============================*\
+        |*         Constructeurs         *|
+        \*===============================*/
         public MainWindow()
         {
             InitializeComponent();
@@ -32,6 +37,45 @@ namespace GameOfLife
             groupBoxStatistics.DataContext = view.Statistics;
             grid.SetPatterns(groupBoxShape.DataContext as ViewModels.Pattern);
         }
+
+        /*===============================*\
+        |*        Méthodes Privées       *|
+        \*===============================*/
+
+        /// <summary>
+        /// Change de grille affichée sur l'interface
+        /// </summary>
+        /// <param name="newGrid">La nouvelle grille</param>
+        private void SetGrid(Views.Grid newGrid)
+        {
+            view = newGrid;
+            panelGrid.Children.Clear();
+            panelGrid.Children.Add(newGrid);
+        }
+
+        /// <summary>
+        /// Enable / Disable les boutons lorsque la simulation est en cours
+        /// </summary>
+        /// <param name="yes"></param>
+        private void ToggleStartButtons(bool yes = true)
+        {
+            buttonStop.IsEnabled = !(yes);
+            buttonSize.IsEnabled = yes;
+            buttonStart.IsEnabled = yes;
+        }
+
+        /// <summary>
+        /// Enable / Disable les boutons lorsque la simulation est stoppée
+        /// </summary>
+        /// <param name="yes"></param>
+        private void TogglePauseButtons()
+        {
+            ToggleStartButtons(false);
+        }
+
+        /*===============================*\
+        |*             Events            *|
+        \*===============================*/
 
         /// <summary>
         /// Appelé lorsque le bouton start est clické
@@ -129,29 +173,6 @@ namespace GameOfLife
         private void Timer_Tick(Object sender, EventArgs args)
         {
             GameOfLifeAlgorithm.Update(view.ViewModel);
-        }
-
-        /// <summary>
-        /// Change de grille affichée sur l'interface
-        /// </summary>
-        /// <param name="newGrid">La nouvelle grille</param>
-        private void SetGrid(Views.Grid newGrid)
-        {
-            view = newGrid;
-            panelGrid.Children.Clear();   
-            panelGrid.Children.Add(newGrid);
-        }
-
-        private void ToggleStartButtons(bool yes = true)
-        {
-            buttonStop.IsEnabled = !(yes);
-            buttonSize.IsEnabled = yes;
-            buttonStart.IsEnabled = yes;
-        }
-
-        private void TogglePauseButtons()
-        {
-            ToggleStartButtons(false);
         }
     }
 }
