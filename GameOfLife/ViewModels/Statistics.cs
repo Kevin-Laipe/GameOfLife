@@ -17,6 +17,15 @@ namespace GameOfLife.ViewModels
             this.model = new Models.Statistics();
         }
 
+        public void Reset()
+        {
+            Iterations = 0;
+            Population = 0;
+            GreatestPopulation = 0;
+            SmallestPopulation = 0;
+            OldestCell = 0;
+        }
+
         public int Iterations
         {
             get { return model.Iterations; }
@@ -34,13 +43,23 @@ namespace GameOfLife.ViewModels
             {
                 model.Population = value;
                 RaisePropertyChanged("Population");
+
+                if(value > GreatestPopulation)
+                {
+                    this.GreatestPopulation = value;
+                }
+
+                if(value < SmallestPopulation)
+                {
+                    this.SmallestPopulation = value;
+                }
             }
         }
 
         public int GreatestPopulation
         {
             get { return model.GreatestPopulation; }
-            set
+            private set
             {
                 model.GreatestPopulation = value;
                 RaisePropertyChanged("GreatestPopulation");
@@ -50,7 +69,7 @@ namespace GameOfLife.ViewModels
         public int SmallestPopulation
         {
             get { return model.SmallestPopulation; }
-            set
+            private set
             {
                 model.SmallestPopulation = value;
                 RaisePropertyChanged("SmallestPopulation");

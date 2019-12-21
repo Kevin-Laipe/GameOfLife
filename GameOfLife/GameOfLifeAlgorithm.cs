@@ -10,6 +10,9 @@ namespace GameOfLife
 
         public static void Update(Grid grid)
         {
+            grid.Statistics.Iterations += 1;
+            grid.Statistics.OldestCell = 0;
+
             PrepareNextValues(grid);
             ApplyNextValues(grid);
         }

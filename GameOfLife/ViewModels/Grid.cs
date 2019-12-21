@@ -40,6 +40,8 @@ namespace GameOfLife.ViewModels
 
         public void Randomize()
         {
+            Clear(); //Nécéssaire pour que les statistiques soient corrects
+
             Random random = new Random(DateTime.Now.Millisecond);
             foreach(Cell cell in cells)
             {
@@ -53,6 +55,8 @@ namespace GameOfLife.ViewModels
             {
                 cell.State = CellState.Dead;
             }
+
+            Statistics.Reset();
         }
 
         /*===============================*\

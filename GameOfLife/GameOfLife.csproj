@@ -55,11 +55,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Collections\PatternCollection.cs" />
+    <Compile Include="Models\Pattern.cs" />
     <Compile Include="Enums\CellState.cs" />
     <Compile Include="GameOfLifeAlgorithm.cs" />
     <Compile Include="Models\Statistics.cs" />
     <Compile Include="ViewModels\Cell.cs" />
     <Compile Include="ViewModels\Grid.cs" />
+    <Compile Include="ViewModels\Pattern.cs" />
     <Compile Include="Views\Cell.cs" />
     <Compile Include="Views\Grid.cs" />
     <Compile Include="Views\NumberPicker.cs" />
@@ -105,6 +108,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="images\glider.PNG" />
+    <Resource Include="images\lwSpaceship.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\cellule.PNG" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

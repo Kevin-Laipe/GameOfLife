@@ -3,6 +3,9 @@ using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Media;
 using System.ComponentModel;
+using System.Diagnostics;
+using GameOfLife.Enums;
+using GameOfLife.Models;
 
 namespace GameOfLife.Views
 {
@@ -12,6 +15,7 @@ namespace GameOfLife.Views
         |*           Attributs           *|
         \*===============================*/
         private ViewModels.Grid viewModel;
+        private ViewModels.Pattern patterns;
         private Cell[,] cells;
 
         /*===============================*\
@@ -26,7 +30,6 @@ namespace GameOfLife.Views
             cells = new Cell[viewModel.Width, viewModel.Height];
 
             Init();
-            RegisterEvents();
 
             this.VerticalAlignment = VerticalAlignment.Center;
             this.HorizontalAlignment = HorizontalAlignment.Center;
@@ -38,32 +41,29 @@ namespace GameOfLife.Views
 
         private void Init()
         {
-            for(int x = 0; x < viewModel.Width; x++)
+            for (int x = 0; x < viewModel.Width; x++)
             {
                 this.ColumnDefinitions.Add(new ColumnDefinition());
             }
 
-            for(int y = 0; y < viewModel.Height; y++)
+            for (int y = 0; y < viewModel.Height; y++)
             {
                 this.RowDefinitions.Add(new RowDefinition());
             }
 
-            for(int y = 0; y < viewModel.Height; y++)
+            for (int y = 0; y < viewModel.Height; y++)
             {
-                for(int x = 0; x < viewModel.Width; x++)
+                for (int x = 0; x < viewModel.Width; x++)
                 {
                     Cell newCell = new Cell(ViewModel[x, y]);
                     cells[x, y] = newCell;
+                    newCell.Click += new RoutedEventHandler(OnCellClicked);
+                    newCell.ViewModel.PropertyChanged += new PropertyChangedEventHandler(OnCellPropertyChanged);
                     this.Children.Add(newCell);
                     Grid.SetColumn(newCell, x);
                     Grid.SetRow(newCell, y);
                 }
             }
-        }
-
-        private void RegisterEvents()
-        {
-            viewModel.PropertyChanged += new PropertyChangedEventHandler(OnPropertyChanged);
         }
 
         /*===============================*\
@@ -75,11 +75,11 @@ namespace GameOfLife.Views
             Grid newGrid = new Grid(rows, columns);
             newGrid.Statistics = this.Statistics;
 
-            for(int y = 0; y < viewModel.Height; y++)
+            for (int y = 0; y < viewModel.Height; y++)
             {
-                for(int x = 0; x < viewModel.Width; x++)
+                for (int x = 0; x < viewModel.Width; x++)
                 {
-                    if(x < newGrid.ViewModel.Width && y < newGrid.ViewModel.Height)
+                    if (x < newGrid.ViewModel.Width && y < newGrid.ViewModel.Height)
                         newGrid.viewModel[x, y].State = viewModel[x, y].State;
                 }
             }
@@ -118,15 +118,53 @@ namespace GameOfLife.Views
             set { viewModel.Statistics = value; }
         }
 
+        public void SetPatterns(ViewModels.Pattern patterns)
+        {
+            this.patterns = patterns;
+        }
+
         /*===============================*\
         |*            Events             *|
         \*===============================*/
 
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
+        private void OnCellPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
-            if(args.PropertyName == "Cell")
+            ViewModels.Cell cell = sender as ViewModels.Cell;
+
+            switch (args.PropertyName)
             {
-                
+                case "State":
+                    if (cell.State == CellState.Alive)
+                        Statistics.Population += 1;
+                    else
+                        Statistics.Population -= 1;
+                    break;
+
+                case "Age":
+                    if (cell.Age > Statistics.OldestCell)
+                        Statistics.OldestCell = cell.Age;
+                    break;
+
+            }
+
+            
+        }
+
+        private void OnCellClicked(object sender, RoutedEventArgs args)
+        {
+            if(patterns != null)
+            {
+                Pattern currentPattern = patterns.SelectedPattern;
+                Cell cellClicked = sender as Cell;
+
+                foreach (Point point in currentPattern.Cells)
+                {
+                    int x = (int) (cellClicked.ViewModel.X + point.X);
+                    int y = (int) (cellClicked.ViewModel.Y + point.Y);
+                    Cell cell = cells[x % viewModel.Width, y % viewModel.Height];
+
+                    cell.ViewModel.State = CellState.Alive;
+                }
             }
         }
     }

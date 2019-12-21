@@ -1,6 +1,7 @@
 ﻿using GameOfLife.Models;
 using System;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
 namespace GameOfLife
@@ -26,7 +27,8 @@ namespace GameOfLife
             numberHeight.SetValue(10);
 
             view = grid;
-            this.DataContext = view.Statistics;
+            groupBoxStatistics.DataContext = view.Statistics;
+            grid.SetPatterns(groupBoxShape.DataContext as ViewModels.Pattern);
             ToggleStartButtons();
         }
 
@@ -61,6 +63,8 @@ namespace GameOfLife
         private void buttonReset_Clicked(object sender, RoutedEventArgs e)
         {
             view.ViewModel.Clear();
+            timer.Stop();
+            ToggleStartButtons();
         }
 
         /// <summary>

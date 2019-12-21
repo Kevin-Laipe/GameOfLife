@@ -1,6 +1,7 @@
 ﻿using GameOfLife.Enums;
 using GameOfLife.Models;
 using System;
+using System.Diagnostics;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -59,7 +60,7 @@ namespace GameOfLife.Views
 
         private void OnMouseClick(Object sender, RoutedEventArgs args)
         {
-            viewModel.State = (CellState)((int)(viewModel.State + 1) % 2);
+            //viewModel.State = (CellState)((int)(viewModel.State + 1) % 2);
         }
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
