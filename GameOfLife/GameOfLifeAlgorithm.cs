@@ -51,7 +51,7 @@ namespace GameOfLife
 
             if (grid.Statistics.GreatestPopulation < grid.Statistics.Population)
                 grid.Statistics.GreatestPopulation = grid.Statistics.Population;
-            if (grid.Statistics.SmallestPopulation > grid.Statistics.Population)
+            if (grid.Statistics.SmallestPopulation > grid.Statistics.Population || grid.Statistics.SmallestPopulation == 0)
                 grid.Statistics.SmallestPopulation = grid.Statistics.Population;
         }
 
