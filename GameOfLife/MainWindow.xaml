@@ -13,7 +13,7 @@
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="170" />
+            <ColumnDefinition Width="190" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -49,9 +49,6 @@
             </GroupBox>
 
             <GroupBox Header="{StaticResource patterns}" x:Name="groupBoxShape">
-                <GroupBox.DataContext>
-                    <viewmodels:Pattern />
-                </GroupBox.DataContext>
                 <ComboBox x:Name="comboBoxPattern" ItemsSource="{Binding Patterns}" SelectedItem="{Binding SelectedPattern}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>

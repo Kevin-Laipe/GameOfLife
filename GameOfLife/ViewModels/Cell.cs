@@ -74,17 +74,7 @@ namespace GameOfLife.ViewModels
         public void Apply()
         {
             this.State = nextState;
-
-            if(this.State == CellState.Alive)
-            {
-                this.model.Age += 1;
-                RaisePropertyChanged("Age");
-            }
-            if(this.State == CellState.Dead && model.Age != 0)
-            {
-                this.model.Age = 0;
-                RaisePropertyChanged("Age");
-            }
+            this.Age = (this.State == CellState.Alive) ? this.Age + 1 : 0;
         }
 
         /*===============================*\
@@ -113,6 +103,14 @@ namespace GameOfLife.ViewModels
         public int Age
         {
             get { return model.Age; }
+            private set
+            {
+                if(this.Age != value)
+                {
+                    this.model.Age = value;
+                    RaisePropertyChanged("Age");
+                }
+            }
         }
 
         /// <summary>

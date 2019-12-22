@@ -48,6 +48,11 @@ namespace GameOfLife
                     grid[x, y].Apply();
                 }
             }
+
+            if (grid.Statistics.GreatestPopulation < grid.Statistics.Population)
+                grid.Statistics.GreatestPopulation = grid.Statistics.Population;
+            if (grid.Statistics.SmallestPopulation > grid.Statistics.Population)
+                grid.Statistics.SmallestPopulation = grid.Statistics.Population;
         }
 
         /// <summary>

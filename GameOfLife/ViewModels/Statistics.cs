@@ -46,6 +46,10 @@ namespace GameOfLife.ViewModels
             OldestCell = 0;
         }
 
+        /*===============================*\
+        |*           Accesseurs          *|
+        \*===============================*/
+
         /// <summary>
         /// Nombre d'itérations
         /// </summary>
@@ -69,16 +73,6 @@ namespace GameOfLife.ViewModels
             {
                 model.Population = value;
                 RaisePropertyChanged("Population");
-
-                if(value > GreatestPopulation)
-                {
-                    this.GreatestPopulation = value;
-                }
-
-                if(value < SmallestPopulation)
-                {
-                    this.SmallestPopulation = value;
-                }
             }
         }
 
@@ -88,7 +82,7 @@ namespace GameOfLife.ViewModels
         public int GreatestPopulation
         {
             get { return model.GreatestPopulation; }
-            private set
+            set
             {
                 model.GreatestPopulation = value;
                 RaisePropertyChanged("GreatestPopulation");
@@ -101,7 +95,7 @@ namespace GameOfLife.ViewModels
         public int SmallestPopulation
         {
             get { return model.SmallestPopulation; }
-            private set
+            set
             {
                 model.SmallestPopulation = value;
                 RaisePropertyChanged("SmallestPopulation");

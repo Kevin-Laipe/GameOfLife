@@ -21,6 +21,19 @@ namespace GameOfLife.ViewModels
         private Models.Pattern selectedPattern;
 
         /*===============================*\
+        |*         Constructeurs         *|
+        \*===============================*/
+
+        /// <summary>
+        /// Constructeurs par défaut
+        /// </summary>
+        public Pattern()
+        {
+            this.patterns = new ObservableCollection<Models.Pattern>(PatternCollection.All);
+            this.selectedPattern = PatternCollection.Cell;
+        }
+
+        /*===============================*\
         |*           Accesseurs          *|
         \*===============================*/
 

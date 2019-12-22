@@ -26,6 +26,11 @@ namespace GameOfLife.Views
         \*===============================*/
         
         /// <summary>
+        /// Constructeur par défaut
+        /// </summary>
+        public Grid() : this(10, 10) { }
+
+        /// <summary>
         /// Constructeur complet
         /// </summary>
         /// <param name="width">Largeur (nombre de colonnes)</param>
@@ -36,6 +41,7 @@ namespace GameOfLife.Views
             cells = new Cell[viewModel.Width, viewModel.Height];
 
             Init();
+            patterns = new ViewModels.Pattern();
 
             this.VerticalAlignment = VerticalAlignment.Center;
             this.HorizontalAlignment = HorizontalAlignment.Center;
@@ -91,6 +97,7 @@ namespace GameOfLife.Views
         {
             Grid newGrid = new Grid(width, height);
             newGrid.Statistics = this.Statistics;
+            newGrid.Patterns = this.Patterns;
 
             for (int y = 0; y < viewModel.Height; y++)
             {
@@ -123,19 +130,6 @@ namespace GameOfLife.Views
         }
 
         /*===============================*\
-        |*       Méthodes publiques      *|
-        \*===============================*/
-
-        /// <summary>
-        /// Enregistre la Vue-Modèle des patterns
-        /// </summary>
-        /// <param name="patterns"></param>
-        public void SetPatterns(ViewModels.Pattern patterns)
-        {
-            this.patterns = patterns;
-        }
-
-        /*===============================*\
         |*           Accesseurs          *|
         \*===============================*/
 
@@ -145,7 +139,7 @@ namespace GameOfLife.Views
         /// <param name="x">Coodonée X de la cellule</param>
         /// <param name="y">Coordonée Y de la cellule</param>
         /// <returns>Cellule</returns>
-        private Cell this[int x, int y]
+        public Cell this[int x, int y]
         {
             get { return cells[x, y]; }
         }
@@ -156,6 +150,15 @@ namespace GameOfLife.Views
         public ViewModels.Grid ViewModel
         {
             get { return viewModel; }
+        }
+
+        /// <summary>
+        /// Vue-Modèle des patternes de la grille
+        /// </summary>
+        public ViewModels.Pattern Patterns
+        {
+            get { return patterns; }
+            set { patterns = value; }
         }
 
         /// <summary>
@@ -206,19 +209,16 @@ namespace GameOfLife.Views
         /// <param name="args"></param>
         private void OnCellClicked(object sender, RoutedEventArgs args)
         {
-            if(patterns != null)
+            Pattern currentPattern = patterns.SelectedPattern;
+            Cell cellClicked = sender as Cell;
+
+            foreach (Point point in currentPattern.Cells)
             {
-                Pattern currentPattern = patterns.SelectedPattern;
-                Cell cellClicked = sender as Cell;
+                int x = (int)(cellClicked.ViewModel.X + point.X);
+                int y = (int)(cellClicked.ViewModel.Y + point.Y);
+                Cell cell = cells[x % viewModel.Width, y % viewModel.Height];
 
-                foreach (Point point in currentPattern.Cells)
-                {
-                    int x = (int) (cellClicked.ViewModel.X + point.X);
-                    int y = (int) (cellClicked.ViewModel.Y + point.Y);
-                    Cell cell = cells[x % viewModel.Width, y % viewModel.Height];
-
-                    cell.ViewModel.State = CellState.Alive;
-                }
+                cell.ViewModel.State = CellState.Alive;
             }
         }
     }

@@ -35,7 +35,7 @@ namespace GameOfLife
 
             view = grid;
             groupBoxStatistics.DataContext = view.Statistics;
-            grid.SetPatterns(groupBoxShape.DataContext as ViewModels.Pattern);
+            groupBoxShape.DataContext = view.Patterns;
         }
 
         /*===============================*\
@@ -87,6 +87,10 @@ namespace GameOfLife
             timer.Start();
             TogglePauseButtons();
 
+            if (grid.Statistics.GreatestPopulation < grid.Statistics.Population)
+                grid.Statistics.GreatestPopulation = grid.Statistics.Population;
+            if (grid.Statistics.SmallestPopulation > grid.Statistics.Population)
+                grid.Statistics.SmallestPopulation = grid.Statistics.Population;
         }
 
         /// <summary>
